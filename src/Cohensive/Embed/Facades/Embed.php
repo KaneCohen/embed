@@ -1,5 +1,5 @@
 <?php
-namespace Embed\Facades;
+namespace Cohensive\Embed\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

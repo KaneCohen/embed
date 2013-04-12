@@ -1,5 +1,5 @@
 <?php
-namespace Embed;
+namespace Cohensive\Embed;
 
 class Embed
 {

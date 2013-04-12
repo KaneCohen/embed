@@ -1,5 +1,5 @@
 {
-    "name": "kanecohen/embed",
+    "name": "cohensive/embed",
     "description": "Media Embed",
     "authors": [
         {
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Kanecohen\\Embed": "src/"
+            "Cohensive\\Embed": "src/"
         }
     },
     "minimum-stability": "dev"

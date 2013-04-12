@@ -1,5 +1,5 @@
 <?php
-namespace Embed;
+namespace Cohensive\Embed;
 
 use Illuminate\Support\ServiceProvider;
 
