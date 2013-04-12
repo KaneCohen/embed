@@ -1,0 +1,23 @@
+{
+    "name": "kanecohen/embed",
+    "description": "Media Embed",
+    "authors": [
+        {
+            "name": "Kane Cohen",
+            "email": "kanecohen@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Kanecohen\\Embed": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
