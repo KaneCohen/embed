@@ -36,8 +36,6 @@ class Embed
 			$this->params = (isset($config['params']) ? $config['params'] : null);
 		}
 
-		$this->providers = (new EmbedProviders())->getProviders();
-
 	}
 
 	public function setUrl(string $url)
@@ -243,6 +241,11 @@ class Embed
 	public function getObjectCode()
 	{
 		return $this->forgeObject();
+	}
+
+	public function setProviders($providers)
+	{
+		$this->providers = $providers;
 	}
 
 	public function getProvider()
