@@ -35,19 +35,16 @@ class Embed
 			$this->attributes = (isset($config['attributes']) ? $config['attributes'] : null);
 			$this->params = (isset($config['params']) ? $config['params'] : null);
 		}
-
 	}
 
 	public function setUrl(string $url)
 	{
 		$this->url = $url;
-		$this->parseUrl();
 	}
 
 	// key - mixed string/array
 	public function setParam($key, $val = null)
 	{
-
 		if (is_array($key) ) {
 			foreach ($key as $k => $val) {
 				$this->params[$k] = $val;
@@ -63,7 +60,6 @@ class Embed
 	// key - mixed string/array
 	public function setAttr($key, $val = null)
 	{
-
 		if (is_array($key) ) {
 			foreach ($key as $k => $val) {
 				$this->attributes[$k] = $val;
@@ -74,7 +70,6 @@ class Embed
 
 		// if provider already set, update it's data
 		$this->updateProvider();
-
 	}
 
 	// method to parse url. Can be used multiple times after resetting url

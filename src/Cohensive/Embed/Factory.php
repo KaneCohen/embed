@@ -7,8 +7,8 @@ class Factory {
 
 	public function __construct($app)
 	{
-		$config = $this->app['config'];
-		$this->providers($config->get('embed'));
+		$config = $app['config'];
+		$this->providers = $config->get('embed::providers');
 	}
 
 	public function make($url = null, $config = null)
