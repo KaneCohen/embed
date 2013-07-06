@@ -55,12 +55,13 @@ class Embed
 
 		$this->updateProvider();
 
+		return $this;
 	}
 
 	// key - mixed string/array
 	public function setAttr($key, $val = null)
 	{
-		if (is_array($key) ) {
+		if (is_array($key)) {
 			foreach ($key as $k => $val) {
 				$this->attributes[$k] = $val;
 			}
@@ -68,11 +69,13 @@ class Embed
 			$this->attributes[$key] = $val;
 		}
 
-		// if provider already set, update it's data
+		// If provider already set, update it's data.
 		$this->updateProvider();
+
+		return $this;
 	}
 
-	// method to parse url. Can be used multiple times after resetting url
+	// Method to parse url. Can be used multiple times after resetting url.
 	public function parseUrl()
 	{
 		if ( ! is_null($this->url) ) {
@@ -138,22 +141,22 @@ class Embed
 	public function updateProvider()
 	{
 		// if provider already set, update it's data
-		if ( ! is_null($this->provider) ) {
-			if ( ! is_null($this->attributes) ) {
-				if ( isset($this->provider['iframe']) ) {
-					$this->provider['iframe'] = array_replace($this->provider['iframe'], $this->attributes);
+		if (! is_null($this->provider)) {
+			if (! is_null($this->attributes)) {
+				if (isset($this->provider['render']['iframe'])) {
+					$this->provider['render']['iframe'] = array_replace($this->provider['render']['iframe'], $this->attributes);
 				}
-				if ( isset($this->provider['object']) && isset($this->provider['object']['attributes']) ) {
-					$this->provider['object']['attributes'] = array_replace($this->provider['object']['attributes'], $this->attributes);
+				if (isset($this->provider['render']['object']) && isset($this->provider['render']['object']['attributes'])) {
+					$this->provider['render']['object']['attributes'] = array_replace($this->provider['render']['object']['attributes'], $this->attributes);
 				}
-				if ( isset($this->provider['object']) && isset($this->provider['object']['embed']) ) {
-					$this->provider['object']['embed'] = array_replace($this->provider['object']['embed'], $this->attributes);
+				if (isset($this->provider['render']['object']) && isset($this->provider['render']['object']['embed'])) {
+					$this->provider['render']['object']['embed'] = array_replace($this->provider['render']['object']['embed'], $this->attributes);
 				}
 			}
 
-			if ( ! is_null($this->params) ) {
-				if ( isset($this->provider['object']) && isset($this->provider['object']['params']) ) {
-					$this->provider['object']['params'] = array_replace($this->provider['object']['params'], $this->params);
+			if (! is_null($this->params)) {
+				if (isset($this->provider['render']['object']) && isset($this->provider['render']['object']['params'])) {
+					$this->provider['render']['object']['params'] = array_replace($this->provider['render']['object']['params'], $this->params);
 				}
 			}
 		}
