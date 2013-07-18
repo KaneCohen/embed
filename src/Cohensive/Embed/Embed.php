@@ -125,11 +125,11 @@ class Embed
 
 		// check if we have an iframe creation array
 		foreach ($array as $key => $val) {
-			if ( is_array($val) ) {
+			if (is_array($val)) {
 				$array[$key] = $this->parseProvider($val, $matches);
 			} else {
 				for ($i=1; $i<count($matches); $i++) {
-					$array[$key] = str_replace('{'.$i.'}', $matches[$i], $val);
+					$array[$key] = str_replace('{'.$i.'}', $matches[$i], $array[$key]);
 				}
 			}
 		}
@@ -248,7 +248,7 @@ class Embed
 
 	public function getProvider()
 	{
-		return $this->provider;
+		return json_decode(json_encode($this->provider));
 	}
 
 }
