@@ -171,16 +171,16 @@ class Embed
 		}
 
 		// start iframe tag
-		$iframe = '<script';
+		$script = '<script';
 
 		foreach ($this->provider['render']['script'] as $attribute => $val) {
-			$iframe .= sprintf(' %s="%s"', $attribute, $val);
+			$script .= sprintf(' %s="%s"', $attribute, $val);
 		}
 
 		// close iframe
 		$script .='></script>';
 
-		return $iframe;
+		return $script;
 	}
 
 	// matches - array of matched strings
