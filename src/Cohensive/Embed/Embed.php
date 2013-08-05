@@ -202,7 +202,7 @@ class Embed
 		// close iframe
 		$iframe .='></iframe>';
 
-		$object .= $this->forgeScript();
+		$iframe .= $this->forgeScript();
 
 		return $iframe;
 	}
