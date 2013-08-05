@@ -163,6 +163,26 @@ class Embed
 
 	}
 
+	public function forgeScript()
+	{
+		// check if we have an iframe creation array
+		if ( ! isset($this->provider) && ! isset($this->provider['render']['script']) ) {
+			return null;
+		}
+
+		// start iframe tag
+		$iframe = '<script';
+
+		foreach ($this->provider['render']['script'] as $attribute => $val) {
+			$iframe .= sprintf(' %s="%s"', $attribute, $val);
+		}
+
+		// close iframe
+		$script .='></script>';
+
+		return $iframe;
+	}
+
 	// matches - array of matched strings
 	// provider that we matched
 	public function forgeIframe()
@@ -182,8 +202,9 @@ class Embed
 		// close iframe
 		$iframe .='></iframe>';
 
-		return $iframe;
+		$object .= $this->forgeScript();
 
+		return $iframe;
 	}
 
 	public function forgeObject()
@@ -220,6 +241,8 @@ class Embed
 		}
 
 		$object .= '</object>';
+
+		$object .= $this->forgeScript();
 
 		return $object;
 
