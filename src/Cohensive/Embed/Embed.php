@@ -142,6 +142,10 @@ class Embed
 	{
 		// if provider already set, update it's data
 		if (! is_null($this->provider)) {
+			if (isset($this->attributes['width']) && ! isset($this->attributes['height'])) {
+				$this->attributes['height'] = $this->attributes['width']/$this->provider['render']['sizeRatio'];
+			}
+
 			if (! is_null($this->attributes)) {
 				if (isset($this->provider['render']['iframe'])) {
 					$this->provider['render']['iframe'] = array_replace($this->provider['render']['iframe'], $this->attributes);
@@ -160,7 +164,6 @@ class Embed
 				}
 			}
 		}
-
 	}
 
 	public function forgeScript()
