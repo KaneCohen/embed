@@ -169,7 +169,7 @@ class Embed
 	public function forgeScript()
 	{
 		// check if we have an iframe creation array
-		if ( ! isset($this->provider) && ! isset($this->provider['render']['script']) ) {
+		if (! isset($this->provider) || ! isset($this->provider['render']['script'])) {
 			return null;
 		}
 
