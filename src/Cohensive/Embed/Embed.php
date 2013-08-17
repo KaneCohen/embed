@@ -191,7 +191,7 @@ class Embed
 	public function forgeIframe()
 	{
 		// check if we have an iframe creation array
-		if ( ! isset($this->provider) && ! isset($this->provider['render']['iframe']) ) {
+		if (! isset($this->provider) || ! isset($this->provider['render']['iframe'])) {
 			return false;
 		}
 
@@ -213,30 +213,30 @@ class Embed
 	public function forgeObject()
 	{
 		// check if we have an object creation array
-		if ( isset($this->provider) && ! isset($this->provider['render']['object']) ) {
+		if (isset($this->provider) || ! isset($this->provider['render']['object'])) {
 			return false;
 		}
 
 		// start object tag
 		$object = '<object';
 
-		foreach ($this->provider['object']['attributes'] as $attribute => $val) {
+		foreach ($this->provider['render']['object']['attributes'] as $attribute => $val) {
 			$object .= sprintf(' %s="%s"', $attribute, $val);
 		}
 		$object .= '>';
 
 		// create params
-		if ( isset($this->provider['object']['params']) ) {
-			foreach ($this->provider['object']['params'] as $param => $val) {
+		if ( isset($this->provider['render']['object']['params']) ) {
+			foreach ($this->provider['render']['object']['params'] as $param => $val) {
 				$object .= sprintf('<param name="%s" value="%s"></param>', $param, $val);
 			}
 		}
 
 		// create embed
-		if ( isset($this->provider['object']['embed']) ) {
+		if ( isset($this->provider['render']['object']['embed']) ) {
 			$object .= '<embed';
 			// embed can have same attributes as object itself (height, width etc)
-			foreach ($this->provider['object']['embed'] as $ettribute => $val) {
+			foreach ($this->provider['render']['object']['embed'] as $ettribute => $val) {
 				$val = ( is_bool($val) && $val ? 'true' : 'false' );
 				$object .= sprintf(' %s="%s"', $attribute, $val);
 			}
