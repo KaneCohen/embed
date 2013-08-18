@@ -213,7 +213,7 @@ class Embed
 	public function forgeObject()
 	{
 		// check if we have an object creation array
-		if (isset($this->provider) || ! isset($this->provider['render']['object'])) {
+		if (! isset($this->provider) || ! isset($this->provider['render']['object'])) {
 			return false;
 		}
 
