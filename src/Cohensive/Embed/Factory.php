@@ -16,7 +16,7 @@ class Factory
 	/**
 	 * Create Embed factory and set providers from config.
 	 *
-	 * @param  Illuminate\Foundation\Application  $app
+	 * @param  \Illuminate\Foundation\Application  $app
 	 * @return void
 	 */
 	public function __construct(Application $app)
