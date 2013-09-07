@@ -4,20 +4,46 @@ namespace Cohensive\Embed;
 class Embed
 {
 
-	// could be just a string containing url
+	/**
+	 * Current possible provider url.
+	 *
+	 * @var string
+	 */
 	protected $url;
 
+	/**
+	 * List of attributes to set on object/iframe.
+	 *
+	 * @var array
+	 */
 	protected $attributes;
 
+	/**
+	 * List of params to set on object code.
+	 *
+	 * @var array
+	 */
 	protected $params;
 
-	// providers array
+	/**
+	 * List of available providers.
+	 *
+	 * @var array
+	 */
 	protected $providers;
 
-	// provider array after parse run
+	/**
+	 * Parsed provider that has been found based on input url.
+	 *
+	 * @var array
+	 */
 	protected $provider;
 
-	// array of matches after parse run
+	/**
+	 * List of matches that will be set on provider during parse run.
+	 *
+	 * @var array
+	 */
 	protected $matches;
 
 	/**
