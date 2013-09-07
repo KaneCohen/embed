@@ -1,16 +1,37 @@
 <?php
 namespace Cohensive\Embed;
 
-class Factory {
+use Illuminate\Foundation\Application;
 
+class Factory
+{
+
+	/**
+	 * Available embed providers.
+	 *
+	 * @var array
+	 */
 	protected $providers;
 
-	public function __construct($app)
+	/**
+	 * Create Embed factory and set providers from config.
+	 *
+	 * @param  Illuminate\Foundation\Application  $app
+	 * @return void
+	 */
+	public function __construct(Application $app)
 	{
-		$config = $app['config'];
-		$this->providers = $config->get('embed::providers');
+		$this->providers = $app['config']->get('embed::providers');
 	}
 
+	/**
+	 * Create a new Embed instance.
+	 *
+	 * @param  array  $data
+	 * @param  array  $rules
+	 * @param  array  $messages
+	 * @return \Cohenisve\Validation\Validator
+	 */
 	public function make($url = null, $config = null)
 	{
 		$embed = new Embed($url, $config);
