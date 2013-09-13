@@ -232,13 +232,13 @@ class Embed
 	}
 
 	/**
-	 * Generate script for embed if required and available.
+	 * Generate script for embed if required and available. Usually required for certain iframes.
 	 *
 	 * @return string
 	 */
 	public function forgeScript()
 	{
-		// check if we have an iframe creation array
+		// check if we have a script creation array
 		if (! isset($this->provider) || ! isset($this->provider['render']['script'])) {
 			return null;
 		}
@@ -330,6 +330,33 @@ class Embed
 	}
 
 	/**
+	 * Generate HTML5 video tag if required and available.
+	 *
+	 * @return string
+	 */
+	public function forgeVideo()
+	{
+		// Check if we have a video creation array.
+		if (! isset($this->provider) || ! isset($this->provider['render']['video'])) {
+			return false;
+		}
+
+		// Start iframe tag.
+		$video = '<video';
+
+		foreach ($this->provider['render']['video'] as $attribute => $val) {
+			$video .= sprintf(' %s="%s"', $attribute, $val);
+		}
+
+		// Close video tag.
+		$video .='></video>';
+
+		$video .= $this->forgeScript();
+
+		return $video;
+	}
+
+	/**
 	 * Generate html code for embed.
 	 *
 	 * @return string
@@ -338,6 +365,7 @@ class Embed
 	{
 		if ($html = $this->forgeIframe()) return $html;
 		if ($html = $this->forgeObject()) return $html;
+		if ($html = $this->forgeVideo()) return $html;
 	}
 
 	/**
@@ -358,6 +386,16 @@ class Embed
 	public function getObjectCode()
 	{
 		return $this->forgeObject();
+	}
+
+	/**
+	 * Alias for video forge method.
+	 *
+	 * @return string
+	 */
+	public function getVideoCode()
+	{
+		return $this->forgeVideo();
 	}
 
 	/**
