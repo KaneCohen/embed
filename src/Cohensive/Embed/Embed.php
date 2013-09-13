@@ -212,6 +212,9 @@ class Embed
 			}
 
 			if (! is_null($this->attributes)) {
+				if (isset($this->provider['render']['video'])) {
+					$this->provider['render']['video'] = array_replace($this->provider['render']['video'], $this->attributes);
+				}
 				if (isset($this->provider['render']['iframe'])) {
 					$this->provider['render']['iframe'] = array_replace($this->provider['render']['iframe'], $this->attributes);
 				}
