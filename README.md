@@ -48,6 +48,6 @@ if ($embed) {
 	// Print html: '<iframe width="600" height="338" src="//www.youtube.com/embed/uifYHNyH-jA" frameborder="0" allowfullscreen></iframe>'.
 	// Height will be set automatically based on provider width/height ratio.
 	// Height could be set explicitly via setAttr() method.
-	echo $embed->getHtmlCode();
+	echo $embed->getHtml();
 }
 ~~~
