@@ -361,11 +361,11 @@ class Embed
 	 *
 	 * @return string
 	 */
-	public function getHtmlCode()
+	public function getHtml()
 	{
 		if ($html = $this->forgeIframe()) return $html;
-		if ($html = $this->forgeObject()) return $html;
 		if ($html = $this->forgeVideo()) return $html;
+		if ($html = $this->forgeObject()) return $html;
 	}
 
 	/**
@@ -373,7 +373,7 @@ class Embed
 	 *
 	 * @return string
 	 */
-	public function getIframeCode()
+	public function getIframe()
 	{
 		return $this->forgeIframe();
 	}
@@ -383,7 +383,7 @@ class Embed
 	 *
 	 * @return string
 	 */
-	public function getObjectCode()
+	public function getObject()
 	{
 		return $this->forgeObject();
 	}
@@ -393,7 +393,7 @@ class Embed
 	 *
 	 * @return string
 	 */
-	public function getVideoCode()
+	public function getVideo()
 	{
 		return $this->forgeVideo();
 	}
