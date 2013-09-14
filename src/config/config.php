@@ -5,7 +5,7 @@ return array(
 	'providers' => array(
 		'youtube' => array(
 			'name'    => 'YouTube',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://youtube.com',
 			'url'     => array(
 				'^(?:https?://)?(?:www\.)?youtu\.be/([0-9a-zA-Z-_]{11})',
@@ -71,7 +71,7 @@ return array(
 
 		'vimeo' => array(
 			'name'    => 'Vimeo',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://vimeo.com',
 			'url'     => '(?:http://)?(?:www\.)?vimeo\.com/([0-9]+)',
 			'info'    => array(
@@ -110,7 +110,7 @@ return array(
 
 		'dailymotion' => array(
 			'name'    => 'Dailymotion',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://dailymotion.com',
 			'url'     => '(?:http://)?(?:www\.)?dailymotion\.com/video/([^_]+)',
 			'info'    => array(
@@ -131,7 +131,7 @@ return array(
 
 		'gametrailers' => array(
 			'name'    => 'GameTrailers',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://gametrailers.com',
 			'url'     => '^(?:https?://)?media\.mtvnservices\.com/embed/([^"]+:)([0-9a-z-_]+)',
 			'info'    => array(
@@ -152,7 +152,7 @@ return array(
 
 		'ign' => array(
 			'name'    => 'IGN',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://ign.com',
 			'url'     => '^(?:https?://)?(?:www\.)?ign\.com/videos/([0-9a-zA-Z-_/]+)',
 			'info'    => array(
@@ -173,7 +173,7 @@ return array(
 
 		'vine' => array(
 			'name'    => 'Vine',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://vine.co',
 			'url'     => array(
 				'^(?:https?://)?(?:www\.)?vine\.co/v/([0-9a-zA-Z]+)',
@@ -197,7 +197,7 @@ return array(
 
 		'kickstarter' => array(
 			'name'    => 'Kickstarter',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://kickstarter.com',
 			'url'     => array(
 				'^(?:https?://)?(?:www\.)?kickstarter\.com/projects/([0-9a-zA-Z-_]+)/([0-9a-zA-Z-_]+)'
@@ -221,7 +221,7 @@ return array(
 
 		'ustream' => array(
 			'name'    => 'Ustream',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://ustream.tv',
 			'url'     => array(
 				'^(?:https?://)?(?:www\.)?ustream\.tv/channel/([0-9]+)'
@@ -245,7 +245,7 @@ return array(
 
 		'ustreamArchive' => array(
 			'name'    => 'Ustream Recorded',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://ustream.tv',
 			'url'     => array(
 				'^(?:https?://)?(?:www\.)?ustream\.tv/recorded/([0-9]+)'
@@ -269,7 +269,7 @@ return array(
 
 		'twitchArchive' => array(
 			'name'    => 'Twitch Archive',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://twitch.tv',
 			'url'     => array(
 				'^(?:https?://)?(?:www\.)?twitch\.tv/([^"]+)/([^"]+)/([0-9]{8,11})'
@@ -305,7 +305,7 @@ return array(
 
 		'twitch' => array(
 			'name'    => 'Twitch',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => 'http://twitch.tv',
 			'url'     => array(
 				'^(?:https?://)?(?:www\.)?twitch\.tv/([0-9a-zA-Z]+)'
@@ -340,7 +340,7 @@ return array(
 
 		'html5video' => array(
 			'name'    => 'HTML5 video',
-			'type'		=> 'video',
+			'type'    => 'video',
 			'website' => '',
 			'url'     => array(
 				'(.*).(mp4|ogg|webm)$'
