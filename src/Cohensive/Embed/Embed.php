@@ -55,70 +55,14 @@ class Embed
 	 */
 	public function __construct($url = null, $config = null)
 	{
-		if ( ! is_null($url) ) {
+		if (! is_null($url)) {
 			$this->url = $url;
 		}
 
-		if ( ! is_null($config) ) {
-			$this->attributes = (isset($config['attributes']) ? $config['attributes'] : null);
-			$this->params = (isset($config['params']) ? $config['params'] : null);
+		if (! is_null($config)) {
+			$this->attributes = isset($config['attributes']) ? $config['attributes'] : null;
+			$this->params = isset($config['params']) ? $config['params'] : null;
 		}
-	}
-
-	/**
-	 * Excplicitly set url.
-	 *
-	 * @param  string  $url
-	 * @return void
-	 */
-	public function setUrl($url)
-	{
-		$this->url = $url;
-	}
-
-	/**
-	 * Excplicitly set embed params.
-	 *
-	 * @param  string  $key
-	 * @param  mixed  $val
-	 * @return void
-	 */
-	public function setParam($key, $val = null)
-	{
-		if (is_array($key) ) {
-			foreach ($key as $k => $val) {
-				$this->params[$k] = $val;
-			}
-		} else {
-			$this->params[$key] = $val;
-		}
-
-		$this->updateProvider();
-
-		return $this;
-	}
-
-	/**
-	 * Excplicitly set embed attributes.
-	 *
-	 * @param  string  $key
-	 * @param  mixed  $val
-	 * @return void
-	 */
-	public function setAttr($key, $val = null)
-	{
-		if (is_array($key)) {
-			foreach ($key as $k => $val) {
-				$this->attributes[$k] = $val;
-			}
-		} else {
-			$this->attributes[$key] = $val;
-		}
-
-		// If provider already set, update it's data.
-		$this->updateProvider();
-
-		return $this;
 	}
 
 	/**
@@ -128,37 +72,46 @@ class Embed
 	 */
 	public function parseUrl()
 	{
-		if ( ! is_null($this->url) ) {
-
+		if (! is_null($this->url)) {
+			// Reset provider before parsing new url.
+			$this->provider = null;
 			foreach ($this->providers as $provider) {
 				if ( is_array($provider['url']) ) {
-					// multiple urls
+					// Multiple urls to check against.
 					foreach ($provider['url'] as $pattern) {
-						if ( preg_match('~'.$pattern.'~imu', $this->url, $matches) ) {
-							$this->matches = $matches;
-							$this->provider = $provider;
-							$this->parseProvider($this->provider['info'], $matches);
-							$this->parseProvider($this->provider['render'], $matches);
-							$this->updateProvider();
+						if ($this->findProviderMatch($pattern, $provider)) {
 							return $this;
 						}
 					}
 
 				} else {
-					if ( preg_match('~'.$provider['url'].'~imu', $this->url, $matches) ) {
-						$this->matches = $matches;
-						$this->provider = $provider;
-						$this->parseProvider($this->provider['info'], $matches);
-						$this->parseProvider($this->provider['render'], $matches);
-						$this->updateProvider();
+					if ($this->findProviderMatch($pattern, $provider)) {
 						return $this;
 					}
 				}
 			}
-
+			return false;
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Find a url match in provider pattern
+	 *
+	 * @return bool
+	 */
+	protected function findProviderMatch($pattern, $provider)
+	{
+		if (preg_match('~'.$pattern.'~imu', $this->url, $matches)) {
+			$this->matches = $matches;
+			$this->provider = $provider;
+			$this->parseProvider($this->provider['info'], $matches);
+			$this->parseProvider($this->provider['render'], $matches);
+			$this->updateProvider();
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -182,7 +135,7 @@ class Embed
 	 * @param  array  $matches
 	 * @return array  $array
 	 */
-	public function parseProvider(&$array, $matches)
+	private function parseProvider(&$array, $matches)
 	{
 		// Check if we have an iframe creation array.
 		foreach ($array as $key => $val) {
@@ -205,8 +158,8 @@ class Embed
 	 */
 	public function updateProvider()
 	{
-		// If provider already set, update its data.
-		if (! is_null($this->provider)) {
+		// If provider already set, update some of its attributes and params.
+		if ($this->provider) {
 			if (isset($this->attributes['width']) && ! isset($this->attributes['height'])) {
 				$this->attributes['height'] = $this->attributes['width']/$this->provider['render']['sizeRatio'];
 			}
@@ -242,21 +195,19 @@ class Embed
 	public function forgeScript()
 	{
 		// check if we have a script creation array
-		if (! isset($this->provider) || ! isset($this->provider['render']['script'])) {
-			return null;
+		if ($this->provider && isset($this->provider['render']['script'])) {
+			// Start script tag.
+			$script = '<script';
+
+			foreach ($this->provider['render']['script'] as $attribute => $val) {
+				$script .= sprintf(' %s="%s"', $attribute, $val);
+			}
+
+			// Close script tag.
+			$script .='></script>';
+
+			return $script;
 		}
-
-		// Start script tag.
-		$script = '<script';
-
-		foreach ($this->provider['render']['script'] as $attribute => $val) {
-			$script .= sprintf(' %s="%s"', $attribute, $val);
-		}
-
-		// Close script tag.
-		$script .='></script>';
-
-		return $script;
 	}
 
 	/**
@@ -267,23 +218,21 @@ class Embed
 	public function forgeIframe()
 	{
 		// Check if we have an iframe creation array.
-		if (! isset($this->provider) || ! isset($this->provider['render']['iframe'])) {
-			return false;
+		if ($this->provider && isset($this->provider['render']['iframe'])) {
+			// Start iframe tag.
+			$iframe = '<iframe';
+
+			foreach ($this->provider['render']['iframe'] as $attribute => $val) {
+				$iframe .= sprintf(' %s="%s"', $attribute, $val);
+			}
+
+			// Close iframe tag.
+			$iframe .='></iframe>';
+
+			$iframe .= $this->forgeScript();
+
+			return $iframe;
 		}
-
-		// Start iframe tag.
-		$iframe = '<iframe';
-
-		foreach ($this->provider['render']['iframe'] as $attribute => $val) {
-			$iframe .= sprintf(' %s="%s"', $attribute, $val);
-		}
-
-		// Close iframe tag.
-		$iframe .='></iframe>';
-
-		$iframe .= $this->forgeScript();
-
-		return $iframe;
 	}
 
 	/**
@@ -294,42 +243,40 @@ class Embed
 	public function forgeObject()
 	{
 		// Check if we have an object creation array.
-		if (! isset($this->provider) || ! isset($this->provider['render']['object'])) {
-			return false;
-		}
+		if ($this->provider && isset($this->provider['render']['object'])) {
+			// Start object tag.
+			$object = '<object';
 
-		// Start object tag.
-		$object = '<object';
-
-		foreach ($this->provider['render']['object']['attributes'] as $attribute => $val) {
-			$object .= sprintf(' %s="%s"', $attribute, $val);
-		}
-		$object .= '>';
-
-		// Create params.
-		if ( isset($this->provider['render']['object']['params']) ) {
-			foreach ($this->provider['render']['object']['params'] as $param => $val) {
-				$object .= sprintf('<param name="%s" value="%s"></param>', $param, $val);
-			}
-		}
-
-		// Create embed.
-		if ( isset($this->provider['render']['object']['embed']) ) {
-			$object .= '<embed';
-			// embed can have same attributes as object itself (height, width etc)
-			foreach ($this->provider['render']['object']['embed'] as $ettribute => $val) {
-				$val = ( is_bool($val) && $val ? 'true' : 'false' );
+			foreach ($this->provider['render']['object']['attributes'] as $attribute => $val) {
 				$object .= sprintf(' %s="%s"', $attribute, $val);
 			}
-			$object .= '></embed>';
+			$object .= '>';
+
+			// Create params.
+			if ( isset($this->provider['render']['object']['params']) ) {
+				foreach ($this->provider['render']['object']['params'] as $param => $val) {
+					$object .= sprintf('<param name="%s" value="%s"></param>', $param, $val);
+				}
+			}
+
+			// Create embed.
+			if ( isset($this->provider['render']['object']['embed']) ) {
+				$object .= '<embed';
+				// embed can have same attributes as object itself (height, width etc)
+				foreach ($this->provider['render']['object']['embed'] as $ettribute => $val) {
+					$val = ( is_bool($val) && $val ? 'true' : 'false' );
+					$object .= sprintf(' %s="%s"', $attribute, $val);
+				}
+				$object .= '></embed>';
+			}
+
+			// Close object tag.
+			$object .= '</object>';
+
+			$object .= $this->forgeScript();
+
+			return $object;
 		}
-
-		// Close object tag.
-		$object .= '</object>';
-
-		$object .= $this->forgeScript();
-
-		return $object;
 	}
 
 	/**
@@ -340,23 +287,108 @@ class Embed
 	public function forgeVideo()
 	{
 		// Check if we have a video creation array.
-		if (! isset($this->provider) || ! isset($this->provider['render']['video'])) {
-			return false;
+		if ($this->provider && isset($this->provider['render']['video'])) {
+			// Start iframe tag.
+			$video = '<video';
+
+			foreach ($this->provider['render']['video'] as $attribute => $val) {
+				$video .= sprintf(' %s="%s"', $attribute, $val);
+			}
+
+			// Close video tag.
+			$video .='></video>';
+
+			$video .= $this->forgeScript();
+
+			return $video;
+		}
+	}
+
+	/**
+	 * Excplicitly set url.
+	 *
+	 * @param  string  $url
+	 * @return void
+	 */
+	public function setUrl($url)
+	{
+		$this->url = $url;
+		return $this;
+	}
+
+	/**
+	 * Return url saved in current embed instance.
+	 *
+	 * @return mixed
+	 */
+	public function getUrl()
+	{
+		return $this->url;
+	}
+
+	/**
+	 * Excplicitly set embed attributes.
+	 *
+	 * @param  string  $key
+	 * @param  mixed  $val
+	 * @return void
+	 */
+	public function setAttribute($key, $val = null)
+	{
+		if (is_array($key)) {
+			foreach ($key as $k => $val) {
+				$this->attributes[$k] = $val;
+			}
+		} else {
+			$this->attributes[$key] = $val;
 		}
 
-		// Start iframe tag.
-		$video = '<video';
+		// If provider already set, update it's data.
+		$this->updateProvider();
 
-		foreach ($this->provider['render']['video'] as $attribute => $val) {
-			$video .= sprintf(' %s="%s"', $attribute, $val);
+		return $this;
+	}
+
+	/**
+	 * Return attributes.
+	 *
+	 * @return mixed
+	 */
+	public function getAttributes()
+	{
+		return $this->attributes;
+	}
+
+	/**
+	 * Excplicitly set embed params.
+	 *
+	 * @param  string  $key
+	 * @param  mixed  $val
+	 * @return void
+	 */
+	public function setParam($key, $val = null)
+	{
+		if (is_array($key) ) {
+			foreach ($key as $k => $val) {
+				$this->params[$k] = $val;
+			}
+		} else {
+			$this->params[$key] = $val;
 		}
 
-		// Close video tag.
-		$video .='></video>';
+		$this->updateProvider();
 
-		$video .= $this->forgeScript();
+		return $this;
+	}
 
-		return $video;
+	/**
+	 * Return params.
+	 *
+	 * @return mixed
+	 */
+	public function getParams()
+	{
+		return $this->params;
 	}
 
 	/**
@@ -410,10 +442,22 @@ class Embed
 	public function setProviders(array $providers)
 	{
 		$this->providers = $providers;
+
+		return $this;
 	}
 
 	/**
-	 * Get up list of providers.
+	 * Get list of providers.
+	 *
+	 * @return mixed
+	 */
+	public function getProviders()
+	{
+		return $this->providers;
+	}
+
+	/**
+	 * Get current provider.
 	 *
 	 * @return array
 	 */
