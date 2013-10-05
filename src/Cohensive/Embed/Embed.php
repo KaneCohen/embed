@@ -85,7 +85,7 @@ class Embed
 					}
 
 				} else {
-					if ($this->findProviderMatch($pattern, $provider)) {
+					if ($this->findProviderMatch($provider['url'], $provider)) {
 						return $this;
 					}
 				}
