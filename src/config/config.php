@@ -350,11 +350,11 @@ return array(
 				'url'   => '{1}.{2}'
 			),
 			'render'  => array(
-				'sizeRatio' => 1,
+				'sizeRatio' => 1.77,
 				'video' => array(
 					'src'      => '{1}.{2}',
 					'width'    => 560,
-					'height'   => 560,
+					'height'   => 315,
 					'controls' => 'controls',
 				),
 			),
