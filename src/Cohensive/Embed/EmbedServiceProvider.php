@@ -12,13 +12,6 @@ class EmbedServiceProvider extends ServiceProvider
    */
   protected $defer = true;
 
-	public function boot()
-	{
-    $this->package('cohensive/embed');
-    // Register the package configuration with the loader.
-    $this->app['config']->package('cohensive/embed', __DIR__.'/../config');
-	}
-
 	/**
 	 * Register the service provider.
 	 *
@@ -27,6 +20,8 @@ class EmbedServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
+    $this->package('cohensive/embed');
+
 		$this->app['embed'] = $this->app->share(function($app) {
 			return new Factory($app);
 		});
