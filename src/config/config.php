@@ -3,6 +3,56 @@
 return array(
 
 	'providers' => array(
+		'youtubePlaylistVideo' => array(
+			'name'    => 'YouTube Playlist',
+			'type'    => 'video',
+			'website' => 'http://youtube.com',
+			'url'     => '^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/watch\?v=)([0-9a-zA-Z-_]{11})(?:\S*list=)([0-9a-zA-Z-_]+)',
+			'info'    => array(
+				'id'     => '{1}',
+				'url'    => 'http://youtube.com/watch?v={1}&list={2}',
+			),
+			'render'  => array(
+				// iframe attributes
+				'sizeRatio' => 1.77,
+				'iframe' => array(
+					'src'     => 'http://www.youtube.com/embed/{1}?list={2}&rel=0&wmode=transparent',
+					'width'   => 560,
+					'height'  => 315,
+					'allowfullscreen' => null,
+					'frameborder'     => 0,
+				),
+			),
+			'data' => null,
+			'dataCallback' => null,
+		),
+
+		'youtubePlaylist' => array(
+			'name'    => 'YouTube Playlist',
+			'type'    => 'video',
+			'website' => 'http://youtube.com',
+			'url'     => array(
+				'^(?:https?://)?(?:www\.)?youtube\.com/playlist\?list=([0-9a-zA-Z-_]+)',
+			),
+			'info'    => array(
+				'id'     => '{1}',
+				'url'    => 'http://youtube.com/playlist?list={1}',
+			),
+			'render'  => array(
+				// iframe attributes
+				'sizeRatio' => 1.77,
+				'iframe' => array(
+					'src'     => 'http://www.youtube.com/embed/videoseries?list={1}&rel=0&wmode=transparent',
+					'width'   => 560,
+					'height'  => 315,
+					'allowfullscreen' => null,
+					'frameborder'     => 0,
+				),
+			),
+			'data' => null,
+			'dataCallback' => null,
+		),
+
 		'youtube' => array(
 			'name'    => 'YouTube',
 			'type'    => 'video',
@@ -73,7 +123,7 @@ return array(
 			'name'    => 'Vimeo',
 			'type'    => 'video',
 			'website' => 'http://vimeo.com',
-			'url'     => '(?:http://)?(?:www\.)?vimeo\.com/([0-9]+)',
+			'url'     => '(?:https?://)?(?:www\.)?vimeo\.com/([0-9]+)',
 			'info'    => array(
 				'id'     => '{1}',
 				'url'    => 'http://vimeo.com/{1}',
@@ -112,7 +162,7 @@ return array(
 			'name'    => 'Dailymotion',
 			'type'    => 'video',
 			'website' => 'http://dailymotion.com',
-			'url'     => '(?:http://)?(?:www\.)?dailymotion\.com/video/([^_]+)',
+			'url'     => '(?:https?://)?(?:www\.)?dailymotion\.com/video/([^_]+)',
 			'info'    => array(
 				'id'    => '{1}',
 				'url'   => 'http://dailymotion.com/video/{1}',
@@ -272,11 +322,11 @@ return array(
 			'type'    => 'video',
 			'website' => 'http://twitch.tv',
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?twitch\.tv/([^"]+)/([^"]+)/([0-9]{8,11})'
+				'^(?:https?://)?(?:www\.)?twitch\.tv/([^"]+)/b/([0-9]+)'
 			),
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://twitch.tv/{1}/{2}/{3}'
+				'url'   => 'http://twitch.tv/{1}/b/{2}'
 			),
 			'render'  => array(
 				'sizeRatio' => 1.64,
@@ -294,7 +344,43 @@ return array(
 						'allowFullScreen'   => 'true',
 						'allowScriptAccess' => 'always',
 						'allowNetworking'   => 'all',
-						'flashvars'         => 'archive_id={3}&channel={1}&hostname=www.twitch.tv&auto_play=false&start_volume=25',
+						'flashvars'         => 'archive_id={2}&channel={1}&hostname=www.twitch.tv&auto_play=false&start_volume=25',
+						'movie'             => 'http://www.twitch.tv/widgets/archive_embed_player.swf'
+					),
+				),
+			),
+			'data'         => null,
+			'dataCallback' => null,
+		),
+
+		'twitchArchiveChapter' => array(
+			'name'    => 'Twitch Archive',
+			'type'    => 'video',
+			'website' => 'http://twitch.tv',
+			'url'     => array(
+				'^(?:https?://)?(?:www\.)?twitch\.tv/([^"]+)/c/([0-9]+)'
+			),
+			'info'    => array(
+				'id'    => '{1}',
+				'url'   => 'http://twitch.tv/{1}/c/{2}'
+			),
+			'render'  => array(
+				'sizeRatio' => 1.64,
+				'object'  => array(
+					'attributes' => array(
+						'type'   => 'application/x-shockwave-flash',
+						'data'   => 'http://twitch.tv/widgets/archive_embed_player.swf',
+						'wmode'  => 'transparent',
+						'id'     => 'clip_embed_player_flash',
+						'width'  => 500,
+						'height' => 350,
+					),
+					'params'  => array(
+						'wMode' => 'transparent',
+						'allowFullScreen'   => 'true',
+						'allowScriptAccess' => 'always',
+						'allowNetworking'   => 'all',
+						'flashvars'         => 'chapter_id={2}&channel={1}&hostname=www.twitch.tv&auto_play=false&start_volume=25',
 						'movie'             => 'http://www.twitch.tv/widgets/archive_embed_player.swf'
 					),
 				),
@@ -350,7 +436,7 @@ return array(
 				'url'   => '{1}.{2}'
 			),
 			'render'  => array(
-				'sizeRatio' => 1.77,
+				'sizeRatio' => 1.777,
 				'video' => array(
 					'src'      => '{1}.{2}',
 					'width'    => 560,
