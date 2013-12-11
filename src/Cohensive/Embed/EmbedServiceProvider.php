@@ -1,5 +1,4 @@
-<?php
-namespace Cohensive\Embed;
+<?php namespace Cohensive\Embed;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -15,14 +14,12 @@ class EmbedServiceProvider extends ServiceProvider
 	/**
 	 * Register the service provider.
 	 *
-	 * @param  Illuminate\Foundation\Application  $app
 	 * @return void
 	 */
 	public function register()
 	{
     $this->package('cohensive/embed');
-
-		$this->app['embed'] = $this->app->share(function($app) {
+		$this->app->bindShared('embed', function($app) {
 			return new Factory($app);
 		});
 	}
