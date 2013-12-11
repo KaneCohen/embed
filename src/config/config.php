@@ -207,7 +207,7 @@ return array(
 			'url'     => '^(?:https?://)?(?:www\.)?ign\.com/videos/([0-9a-zA-Z-_/]+)',
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://ign\.com/videos/{1}',
+				'url'   => 'http://ign.com/videos/{1}',
 			),
 			'render'  => array(
 				'sizeRatio' => 1.7,
