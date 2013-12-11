@@ -210,7 +210,7 @@ return array(
 				'url'   => 'http://ign.com/videos/{1}',
 			),
 			'render'  => array(
-				'sizeRatio' => 1.7,
+				'sizeRatio' => 1.77,
 				'iframe'  => array(
 					'src'     => 'http://widgets.ign.com/video/embed/content.html?url={1}',
 					'width'   => 560,
