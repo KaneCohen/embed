@@ -119,6 +119,27 @@ return array(
 			},
 		),
 
+		'liveleak' => array(
+			'name'    => 'LiveLeak',
+			'type'    => 'video',
+			'website' => 'http://liveleak.com',
+			'url'     => '(?:https?://)?(?:www\.)?liveleak\.com/ll_embed\?f=([0-9a-z]+)',
+			'info'    => array(
+				'id'    => '{1}',
+				'url'   => 'http://liveleak.com/ll_embed?f={1}',
+			),
+			'render'  => array(
+				'sizeRatio' => 1.77,
+				'iframe'  => array(
+					'src'     => 'http://liveleak.com/ll_embed?f={1}',
+					'width'   => 640,
+					'height'  => 360,
+				),
+			),
+			'data'         => null,
+			'dataCallback' => null,
+		),
+
 		'vimeo' => array(
 			'name'    => 'Vimeo',
 			'type'    => 'video',
