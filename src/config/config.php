@@ -415,7 +415,7 @@ return array(
 			'type'    => 'video',
 			'website' => 'http://twitch.tv',
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?twitch\.tv/([0-9a-zA-Z]+)'
+				'^(?:https?://)?(?:www\.)?twitch\.tv/([0-9a-zA-Z-_]+)'
 			),
 			'info'    => array(
 				'id'    => '{1}',
