@@ -2,21 +2,47 @@
 
 return array(
 
+	/*
+	 |--------------------------------------------------------------------------
+	 | SSL
+	 |--------------------------------------------------------------------------
+	 |
+	 | By default (false), Embed will use SSL (https) based on specific
+	 | provider support for SSL and input URL. Input URL must explicitly
+	 | use "https" to enable SSL for resulting embed element.
+	 |
+	 | If ssl is set to true, then Embed will try to use SSL on any provider
+	 | that supports it.
+	 |
+	*/
+
+	'ssl' => false,
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | Media Providers
+	 |--------------------------------------------------------------------------
+	 |
+	 | List of media providers used to construct embed elements.
+	 |
+	*/
+
 	'providers' => array(
 		'youtubePlaylistVideo' => array(
 			'name'    => 'YouTube Playlist',
 			'type'    => 'video',
 			'website' => 'http://youtube.com',
-			'url'     => '^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/watch\?v=)([0-9a-zA-Z-_]{11})(?:\S*list=)([0-9a-zA-Z-_]+)',
+			'ssl'     => true,
+			'url'     => '^(https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/watch\?v=)([0-9a-zA-Z-_]{11})(?:\S*list=)([0-9a-zA-Z-_]+)',
 			'info'    => array(
 				'id'     => '{1}',
-				'url'    => 'http://youtube.com/watch?v={1}&list={2}',
+				'url'    => '{protocol}://youtube.com/watch?v={1}&list={2}',
 			),
 			'render'  => array(
 				// iframe attributes
 				'sizeRatio' => 1.77,
 				'iframe' => array(
-					'src'     => 'http://www.youtube.com/embed/{1}?list={2}&rel=0&wmode=transparent',
+					'src'     => '{protocol}://www.youtube.com/embed/{1}?list={2}&rel=0&wmode=transparent',
 					'width'   => 560,
 					'height'  => 315,
 					'allowfullscreen' => null,
@@ -31,18 +57,19 @@ return array(
 			'name'    => 'YouTube Playlist',
 			'type'    => 'video',
 			'website' => 'http://youtube.com',
+			'ssl'     => true,
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?youtube\.com/playlist\?list=([0-9a-zA-Z-_]+)',
+				'^(https?://)?(?:www\.)?youtube\.com/playlist\?list=([0-9a-zA-Z-_]+)',
 			),
 			'info'    => array(
 				'id'     => '{1}',
-				'url'    => 'http://youtube.com/playlist?list={1}',
+				'url'    => '{protocol}://youtube.com/playlist?list={1}',
 			),
 			'render'  => array(
 				// iframe attributes
 				'sizeRatio' => 1.77,
 				'iframe' => array(
-					'src'     => 'http://www.youtube.com/embed/videoseries?list={1}&rel=0&wmode=transparent',
+					'src'     => '{protocol}://www.youtube.com/embed/videoseries?list={1}&rel=0&wmode=transparent',
 					'width'   => 560,
 					'height'  => 315,
 					'allowfullscreen' => null,
@@ -57,21 +84,22 @@ return array(
 			'name'    => 'YouTube',
 			'type'    => 'video',
 			'website' => 'http://youtube.com',
+			'ssl'     => true,
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?youtu\.be/([0-9a-zA-Z-_]{11})',
-				'^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$'
+				'^(https?://)?(?:www\.)?youtu\.be/([0-9a-zA-Z-_]{11})',
+				'^(https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$'
 			),
 			'info'    => array(
 				'id'     => '{1}',
-				'url'    => 'http://youtu.be/{1}',
-				'dataUrl' => 'http://gdata.youtube.com/feeds/api/videos/{1}?v=2&alt=jsonc',
-				'imageRoot'   => 'http://img.youtube.com/vi/{1}/',
+				'url'    => '{protocol}://youtu.be/{1}',
+				'dataUrl' => '{protocol}://gdata.youtube.com/feeds/api/videos/{1}?v=2&alt=jsonc',
+				'imageRoot'   => '{protocol}://img.youtube.com/vi/{1}/',
 			),
 			'render'  => array(
 				// iframe attributes
 				'sizeRatio' => 1.77,
 				'iframe' => array(
-					'src'     => 'http://www.youtube.com/embed/{1}?rel=0&wmode=transparent',
+					'src'     => '{protocol}://www.youtube.com/embed/{1}?rel=0&wmode=transparent',
 					'width'   => 560,
 					'height'  => 315,
 					'allowfullscreen' => null,
@@ -83,14 +111,14 @@ return array(
 						'height'  => 315,
 					),
 					'params'  => array(
-						'movie' => 'http://youtube.com/v/{1}?version=3&rel=0&wmode=transparent',
+						'movie' => '{protocol}://youtube.com/v/{1}?version=3&rel=0&wmode=transparent',
 						'wMode' => 'transparent',
 						'allowFullScreen'   => 'true',
 						'allowscriptaccess' => 'always',
 					),
 					// embed shares same attributes as object iteslf, but may have some of it's own attributes
 					'embed'   => array(
-						'src'     => 'http://youtube.com/v/{1}?version=3&rel=0&wmode=transparent',
+						'src'     => '{protocol}://youtube.com/v/{1}?version=3&rel=0&wmode=transparent',
 						'width'   => 560,
 						'height'  => 315,
 						'type' => 'application/x-shockwave-flash',
@@ -123,15 +151,16 @@ return array(
 			'name'    => 'LiveLeak',
 			'type'    => 'video',
 			'website' => 'http://liveleak.com',
-			'url'     => '(?:https?://)?(?:www\.)?liveleak\.com/ll_embed\?f=([0-9a-z]+)',
+			'ssl'     => false,
+			'url'     => '(https?://)?(?:www\.)?liveleak\.com/ll_embed\?f=([0-9a-z]+)',
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://liveleak.com/ll_embed?f={1}',
+				'url'   => '{protocol}://liveleak.com/ll_embed?f={1}',
 			),
 			'render'  => array(
 				'sizeRatio' => 1.77,
 				'iframe'  => array(
-					'src'     => 'http://liveleak.com/ll_embed?f={1}',
+					'src'     => '{protocol}://liveleak.com/ll_embed?f={1}',
 					'width'   => 640,
 					'height'  => 360,
 				),
@@ -144,16 +173,17 @@ return array(
 			'name'    => 'Vimeo',
 			'type'    => 'video',
 			'website' => 'http://vimeo.com',
-			'url'     => '(?:https?://)?(?:www\.)?vimeo\.com/([0-9]+)',
+			'ssl'     => false,
+			'url'     => '(https?://)?(?:www\.)?vimeo\.com/([0-9]+)',
 			'info'    => array(
 				'id'     => '{1}',
-				'url'    => 'http://vimeo.com/{1}',
-				'dataUrl' => 'http://vimeo.com/api/v2/video/{1}.json',
+				'url'    => '{protocol}://vimeo.com/{1}',
+				'dataUrl' => '{protocol}://vimeo.com/api/v2/video/{1}.json',
 			),
 			'render'  => array(
 				'sizeRatio' => 1.77,
 				'iframe'  => array(
-					'src'     => 'http://player.vimeo.com/video/{1}',
+					'src'     => '{protocol}://player.vimeo.com/video/{1}',
 					'width'   => 500,
 					'height'  => 281,
 					'allowfullscreen' => null,
@@ -183,15 +213,16 @@ return array(
 			'name'    => 'Dailymotion',
 			'type'    => 'video',
 			'website' => 'http://dailymotion.com',
-			'url'     => '(?:https?://)?(?:www\.)?dailymotion\.com/video/([^_]+)',
+			'ssl'     => true,
+			'url'     => '(https?://)?(?:www\.)?dailymotion\.com/video/([^_]+)',
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://dailymotion.com/video/{1}',
+				'url'   => '{protocol}://dailymotion.com/video/{1}',
 			),
 			'render'  => array(
 				'sizeRatio' => 1.77,
 				'iframe'  => array(
-					'src'     => 'http://www.dailymotion.com/embed/video/{1}',
+					'src'     => '{protocol}://www.dailymotion.com/embed/video/{1}',
 					'width'   => 520,
 					'height'  => 420,
 				),
@@ -204,15 +235,16 @@ return array(
 			'name'    => 'GameTrailers',
 			'type'    => 'video',
 			'website' => 'http://gametrailers.com',
-			'url'     => '^(?:https?://)?media\.mtvnservices\.com/embed/([^"]+:)([0-9a-z-_]+)',
+			'ssl'     => false,
+			'url'     => '^(https?://)?media\.mtvnservices\.com/embed/([^"]+:)([0-9a-z-_]+)',
 			'info'    => array(
 				'id'    => '{1}{2}',
-				'url'   => 'http://media.mtvnservices.com/embed/{1}{2}',
+				'url'   => '{protocol}://media.mtvnservices.com/embed/{1}{2}',
 			),
 			'render'  => array(
 				'sizeRatio' => 1.77,
 				'iframe'  => array(
-					'src'     => 'http://media.mtvnservices.com/embed/{1}{2}',
+					'src'     => '{protocol}://media.mtvnservices.com/embed/{1}{2}',
 					'width'   => 560,
 					'height'  => 315,
 				),
@@ -225,15 +257,16 @@ return array(
 			'name'    => 'IGN',
 			'type'    => 'video',
 			'website' => 'http://ign.com',
-			'url'     => '^(?:https?://)?(?:www\.)?ign\.com/videos/([0-9a-zA-Z-_/]+)',
+			'ssl'     => false,
+			'url'     => '^(https?://)?(?:www\.)?ign\.com/videos/([0-9a-zA-Z-_/]+)',
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://ign.com/videos/{1}',
+				'url'   => '{protocol}://ign.com/videos/{1}',
 			),
 			'render'  => array(
 				'sizeRatio' => 1.77,
 				'iframe'  => array(
-					'src'     => 'http://widgets.ign.com/video/embed/content.html?url={1}',
+					'src'     => '{protocol}://widgets.ign.com/video/embed/content.html?url={1}',
 					'width'   => 560,
 					'height'  => 315,
 				),
@@ -246,18 +279,18 @@ return array(
 			'name'    => 'Vine',
 			'type'    => 'video',
 			'website' => 'http://vine.co',
+			'ssl'     => true,
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?vine\.co/v/([0-9a-zA-Z]+)',
-				'^(?:https?://)?(?:www\.)?vine\.co/v/([0-9a-zA-Z]+)',
+				'^(https?://)?(?:www\.)?vine\.co/v/([0-9a-zA-Z]+)'
 			),
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://vine.co/v/{1}',
+				'url'   => '{protocol}://vine.co/v/{1}',
 			),
 			'render'  => array(
 				'sizeRatio' => 0.864,
 				'iframe'  => array(
-					'src'     => 'http://vine.co/v/{1}/embed/postcard',
+					'src'     => '{protocol}://vine.co/v/{1}/embed/postcard',
 					'width'   => 600,
 					'height'  => 600,
 				),
@@ -270,17 +303,18 @@ return array(
 			'name'    => 'Kickstarter',
 			'type'    => 'video',
 			'website' => 'http://kickstarter.com',
+			'ssl'     => true,
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?kickstarter\.com/projects/([0-9a-zA-Z-_]+)/([0-9a-zA-Z-_]+)'
+				'^(https?://)?(?:www\.)?kickstarter\.com/projects/([0-9a-zA-Z-_]+)/([0-9a-zA-Z-_]+)'
 			),
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://kickstarter.com/projects/{1}/{2}'
+				'url'   => '{protocol}://kickstarter.com/projects/{1}/{2}'
 			),
 			'render'  => array(
 				'sizeRatio' => 1.33,
 				'iframe'  => array(
-					'src'     => 'http://kickstater.com/projects/{1}/{2}/widget/video.html',
+					'src'     => '{protocol}://kickstater.com/projects/{1}/{2}/widget/video.html',
 					'scrolling' => 'no',
 					'width'   => 640,
 					'height'  => 480,
@@ -294,17 +328,18 @@ return array(
 			'name'    => 'Ustream',
 			'type'    => 'video',
 			'website' => 'http://ustream.tv',
+			'ssl'     => true,
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?ustream\.tv/channel/([0-9]+)'
+				'^(https?://)?(?:www\.)?ustream\.tv/channel/([0-9]+)'
 			),
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://ustream.tv/channel/{1}'
+				'url'   => '{protocol}://ustream.tv/channel/{1}'
 			),
 			'render'  => array(
 				'sizeRatio' => 1.64,
 				'iframe'  => array(
-					'src'     => 'http://ustream.tv/embed/{1}?v3&wmode=direct',
+					'src'     => '{protocol}://ustream.tv/embed/{1}?v3&wmode=direct',
 					'scrolling' => 'no',
 					'width'   => 670,
 					'height'  => 390,
@@ -318,17 +353,18 @@ return array(
 			'name'    => 'Ustream Recorded',
 			'type'    => 'video',
 			'website' => 'http://ustream.tv',
+			'ssl'     => true,
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?ustream\.tv/recorded/([0-9]+)'
+				'^(https?://)?(?:www\.)?ustream\.tv/recorded/([0-9]+)'
 			),
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://ustream.tv/recorded/{1}'
+				'url'   => '{protocol}://ustream.tv/recorded/{1}'
 			),
 			'render'  => array(
 				'sizeRatio' => 1.64,
 				'iframe'  => array(
-					'src'     => 'http://ustream.tv/embed/recorded/{1}?v3&wmode=direct',
+					'src'     => '{protocol}://ustream.tv/embed/recorded/{1}?v3&wmode=direct',
 					'scrolling' => 'no',
 					'width'   => 670,
 					'height'  => 390,
@@ -342,19 +378,20 @@ return array(
 			'name'    => 'Twitch Archive',
 			'type'    => 'video',
 			'website' => 'http://twitch.tv',
+			'ssl'     => false,
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?twitch\.tv/([^"]+)/b/([0-9]+)'
+				'^(https?://)?(?:www\.)?twitch\.tv/([^"]+)/b/([0-9]+)'
 			),
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://twitch.tv/{1}/b/{2}'
+				'url'   => '{protocol}://twitch.tv/{1}/b/{2}'
 			),
 			'render'  => array(
 				'sizeRatio' => 1.64,
 				'object'  => array(
 					'attributes' => array(
 						'type'   => 'application/x-shockwave-flash',
-						'data'   => 'http://twitch.tv/widgets/archive_embed_player.swf',
+						'data'   => '{protocol}://twitch.tv/widgets/archive_embed_player.swf',
 						'wmode'  => 'transparent',
 						'id'     => 'clip_embed_player_flash',
 						'width'  => 500,
@@ -366,7 +403,7 @@ return array(
 						'allowScriptAccess' => 'always',
 						'allowNetworking'   => 'all',
 						'flashvars'         => 'archive_id={2}&channel={1}&hostname=www.twitch.tv&auto_play=false&start_volume=25',
-						'movie'             => 'http://www.twitch.tv/widgets/archive_embed_player.swf'
+						'movie'             => '{protocol}://www.twitch.tv/widgets/archive_embed_player.swf'
 					),
 				),
 			),
@@ -378,19 +415,20 @@ return array(
 			'name'    => 'Twitch Archive',
 			'type'    => 'video',
 			'website' => 'http://twitch.tv',
+			'ssl'     => false,
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?twitch\.tv/([^"]+)/c/([0-9]+)'
+				'^(https?://)?(?:www\.)?twitch\.tv/([^"]+)/c/([0-9]+)'
 			),
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://twitch.tv/{1}/c/{2}'
+				'url'   => '{protocol}://twitch.tv/{1}/c/{2}'
 			),
 			'render'  => array(
 				'sizeRatio' => 1.64,
 				'object'  => array(
 					'attributes' => array(
 						'type'   => 'application/x-shockwave-flash',
-						'data'   => 'http://twitch.tv/widgets/archive_embed_player.swf',
+						'data'   => '{protocol}://twitch.tv/widgets/archive_embed_player.swf',
 						'wmode'  => 'transparent',
 						'id'     => 'clip_embed_player_flash',
 						'width'  => 500,
@@ -402,7 +440,7 @@ return array(
 						'allowScriptAccess' => 'always',
 						'allowNetworking'   => 'all',
 						'flashvars'         => 'chapter_id={2}&channel={1}&hostname=www.twitch.tv&auto_play=false&start_volume=25',
-						'movie'             => 'http://www.twitch.tv/widgets/archive_embed_player.swf'
+						'movie'             => '{protocol}://www.twitch.tv/widgets/archive_embed_player.swf'
 					),
 				),
 			),
@@ -414,19 +452,20 @@ return array(
 			'name'    => 'Twitch',
 			'type'    => 'video',
 			'website' => 'http://twitch.tv',
+			'ssl'     => false,
 			'url'     => array(
-				'^(?:https?://)?(?:www\.)?twitch\.tv/([0-9a-zA-Z-_]+)'
+				'^(https?://)?(?:www\.)?twitch\.tv/([0-9a-zA-Z-_]+)'
 			),
 			'info'    => array(
 				'id'    => '{1}',
-				'url'   => 'http://twitch.tv/{1}'
+				'url'   => '{protocol}://twitch.tv/{1}'
 			),
 			'render'  => array(
 				'sizeRatio' => 1.64,
 				'object'  => array(
 					'attributes' => array(
 						'type'   => 'application/x-shockwave-flash',
-						'data'   => 'http://twitch.tv/widgets/live_embed_player.swf?channel={1}',
+						'data'   => '{protocol}://twitch.tv/widgets/live_embed_player.swf?channel={1}',
 						'wmode'  => 'transparent',
 						'id'     => 'live_embed_player_flash',
 						'width'  => 500,
@@ -437,7 +476,7 @@ return array(
 						'allowScriptAccess' => 'always',
 						'allowNetworking'   => 'all',
 						'flashvars'         => 'hostname=www.twitch.tv&channel={1}&auto_play=false&start_volume=25',
-						'movie'             => 'http://www.twitch.tv/widgets/live_embed_player.swf'
+						'movie'             => '{protocol}://www.twitch.tv/widgets/live_embed_player.swf'
 					),
 				),
 			),
@@ -449,8 +488,9 @@ return array(
 			'name'    => 'HTML5 video',
 			'type'    => 'video',
 			'website' => '',
+			'ssl'     => true,
 			'url'     => array(
-				'(.*).(mp4|ogg|webm)$'
+				'^(https?://)?(.*).(mp4|ogg|webm)$'
 			),
 			'info'    => array(
 				'id'    => '{1}.{2}',
@@ -468,7 +508,6 @@ return array(
 			'data'         => null,
 			'dataCallback' => null,
 		),
-
 	)
 
 );

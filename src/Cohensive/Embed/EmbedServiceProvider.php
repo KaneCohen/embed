@@ -4,12 +4,12 @@ use Illuminate\Support\ServiceProvider;
 
 class EmbedServiceProvider extends ServiceProvider
 {
-  /**
-   * Indicates if loading of the provider is deferred.
-   *
-   * @var bool
-   */
-  protected $defer = true;
+	/**
+	 * Indicates if loading of the provider is deferred.
+	 *
+	 * @var bool
+	 */
+	protected $defer = true;
 
 	/**
 	 * Register the service provider.
@@ -18,7 +18,7 @@ class EmbedServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-    $this->package('cohensive/embed');
+		$this->package('cohensive/embed');
 		$this->app->bindShared('embed', function($app) {
 			return new Factory($app);
 		});
@@ -28,5 +28,4 @@ class EmbedServiceProvider extends ServiceProvider
 	{
 		return array('embed');
 	}
-
 }

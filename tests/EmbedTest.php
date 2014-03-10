@@ -70,6 +70,27 @@ class EmbedTest extends PHPUnit_Framework_TestCase {
 	}
 
 
+	public function testEmbedWithSSLAndSSLProvider()
+	{
+		$this->embed->setUrl('http://youtu.be/dQw4w9WgXcQ')->parseUrl();
+		$this->assertEquals('http://youtu.be/dQw4w9WgXcQ', $this->embed->getProvider()->info->url);
+
+		$this->embed->setSSL(true)->updateProvider();
+		$this->assertEquals(true, $this->embed->getSSL());
+		$this->assertEquals('https://youtu.be/dQw4w9WgXcQ', $this->embed->getProvider()->info->url);
+	}
+
+	public function testEmbedWithSSLAndNonSSLProvider()
+	{
+		$this->embed->setUrl('http://twitch.tv/day9tv')->parseUrl();
+		$this->assertEquals('http://twitch.tv/day9tv', $this->embed->getProvider()->info->url);
+
+		$this->embed->setSSL(true)->updateProvider();
+		$this->assertEquals(true, $this->embed->getSSL());
+		$this->assertEquals('http://twitch.tv/day9tv', $this->embed->getProvider()->info->url);
+	}
+
+
 	public function testEmbedHTMLGeneration()
 	{
 		$this->embed->setUrl('http://youtu.be/dQw4w9WgXcQ')->parseUrl();

@@ -5,6 +5,13 @@ class Embed
 {
 
 	/**
+	 * Current url protocol.
+	 *
+	 * @var string
+	 */
+	protected $protocol;
+
+	/**
 	 * Current possible provider url.
 	 *
 	 * @var string
@@ -26,7 +33,14 @@ class Embed
 	protected $params;
 
 	/**
-	 * List of available providers.
+	 * Flag indicating if Embed should work with SSL protocols if available.
+	 *
+	 * @var string
+	 */
+	protected $ssl;
+
+	/**
+	 * Config with all available providers.
 	 *
 	 * @var array
 	 */
@@ -40,11 +54,25 @@ class Embed
 	protected $provider;
 
 	/**
+	 * Cached version of config provider.
+	 *
+	 * @var array
+	 */
+	protected $cachedProvider;
+
+	/**
 	 * List of matches that will be set on provider during parse run.
 	 *
 	 * @var array
 	 */
 	protected $matches;
+
+	/**
+	 * List of initial matches that will be set on provider during parse run.
+	 *
+	 * @var array
+	 */
+	protected $cachedMatches;
 
 	/**
 	 * Create Embed instance.
@@ -56,7 +84,7 @@ class Embed
 	public function __construct($url = null, $config = null)
 	{
 		if (! is_null($url)) {
-			$this->url = $url;
+			$this->setUrl($url);
 		}
 
 		if (! is_null($config)) {
@@ -74,6 +102,7 @@ class Embed
 	{
 		if (! is_null($this->url)) {
 			// Reset provider before parsing new url.
+			$this->cachedProvider = null;
 			$this->provider = null;
 			foreach ($this->providers as $provider) {
 				if ( is_array($provider['url']) ) {
@@ -104,10 +133,8 @@ class Embed
 	protected function findProviderMatch($pattern, $provider)
 	{
 		if (preg_match('~'.$pattern.'~imu', $this->url, $matches)) {
-			$this->matches = $matches;
-			$this->provider = $provider;
-			$this->parseProvider($this->provider['info'], $matches);
-			$this->parseProvider($this->provider['render'], $matches);
+			$this->cachedMatches = $matches;
+			$this->cachedProvider = $provider;
 			$this->updateProvider();
 			return true;
 		}
@@ -115,9 +142,37 @@ class Embed
 	}
 
 	/**
+	 * Get protocol for current url and provider.
+	 *
+	 * @return void
+	 */
+	protected function parseProtocol($matches)
+	{
+		if ($matches[1] == 'http://' || $matches[1] == 'https://') {
+			$protocol = $matches[1];
+			array_splice($this->matches, 1, 1);
+		} else {
+			$protocol = 'http://';
+		}
+
+		if (! $this->url || ! $this->cachedProvider) {
+			throw new \Exception('Cannot detect protocol if URL or provider were not set.');
+		}
+
+		// If provider does not support SSL, stop here and use http.
+		if (! $this->cachedProvider['ssl']) {
+			$this->protocol = 'http';
+		} elseif ($protocol === 'https://' || $this->ssl) {
+			$this->protocol = 'https';
+		} else {
+			$this->protocol = 'http';
+		}
+	}
+
+	/**
 	 * Get remote data if available.
 	 *
-	 * @return Cohensive\Embed\Embed
+	 * @return \Cohensive\Embed\Embed
 	 */
 	public function parseData()
 	{
@@ -135,13 +190,14 @@ class Embed
 	 * @param  array  $matches
 	 * @return array  $array
 	 */
-	private function parseProvider(&$array, $matches)
+	protected function parseProvider(&$array, $matches)
 	{
 		// Check if we have an iframe creation array.
 		foreach ($array as $key => $val) {
 			if (is_array($val)) {
 				$array[$key] = $this->parseProvider($val, $matches);
 			} else {
+				$array[$key] = str_replace('{protocol}', $this->protocol, $array[$key]);
 				for ($i=1; $i<count($matches); $i++) {
 					$array[$key] = str_replace('{'.$i.'}', $matches[$i], $array[$key]);
 				}
@@ -158,8 +214,13 @@ class Embed
 	 */
 	public function updateProvider()
 	{
-		// If provider already set, update some of its attributes and params.
-		if ($this->provider) {
+		if ($this->cachedProvider) {
+			$this->matches = $this->cachedMatches;
+			$this->provider = $this->cachedProvider;
+			$this->parseProtocol($this->matches);
+			$this->parseProvider($this->provider['info'], $this->matches);
+			$this->parseProvider($this->provider['render'], $this->matches);
+
 			if (isset($this->attributes['width']) && ! isset($this->attributes['height'])) {
 				$this->attributes['height'] = $this->attributes['width']/$this->provider['render']['sizeRatio'];
 			}
@@ -308,18 +369,19 @@ class Embed
 	 * Excplicitly set url.
 	 *
 	 * @param  string  $url
-	 * @return void
+	 * @return \Cohensive\Embed\Embed
 	 */
 	public function setUrl($url)
 	{
 		$this->url = $url;
+
 		return $this;
 	}
 
 	/**
 	 * Return url saved in current embed instance.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function getUrl()
 	{
@@ -331,7 +393,7 @@ class Embed
 	 *
 	 * @param  string  $key
 	 * @param  mixed  $val
-	 * @return void
+	 * @return \Cohensive\Embed\Embed
 	 */
 	public function setAttribute($key, $val = null)
 	{
@@ -364,7 +426,7 @@ class Embed
 	 *
 	 * @param  string  $key
 	 * @param  mixed  $val
-	 * @return void
+	 * @return \Cohensive\Embed\Embed
 	 */
 	public function setParam($key, $val = null)
 	{
@@ -434,15 +496,36 @@ class Embed
 	}
 
 	/**
+	 * Set up SSL flag.
+	 *
+	 * @param  bool  $ssl
+	 * @return \Cohensive\Embed\Embed
+	 */
+	public function setSSL($ssl)
+	{
+		$this->ssl = (bool) $ssl;
+		return $this;
+	}
+
+	/**
+	 * Get current SSL flag.
+	 *
+	 * @return boold
+	 */
+	public function getSSL()
+	{
+		return $this->ssl;
+	}
+
+	/**
 	 * Set up new list of providers.
 	 *
 	 * @param  array  $aproviders
-	 * @return void
+	 * @return \Cohensive\Embed\Embed
 	 */
 	public function setProviders(array $providers)
 	{
 		$this->providers = $providers;
-
 		return $this;
 	}
 
