@@ -299,6 +299,28 @@ return array(
 			'dataCallback' => null,
 		),
 
+		'coub' => array(
+			'name'    => 'Coub',
+			'type'    => 'video',
+			'website' => 'http://coub.com',
+			'ssl'     => true,
+			'url'     => '(https?://)?(?:www\.)?coub\.com/view/([^_]+)',
+			'info'    => array(
+				'id'    => '{1}',
+				'url'   => '{protocol}://coub.com/view/{1}',
+			),
+			'render'  => array(
+				'sizeRatio' => 1.77,
+				'iframe'  => array(
+					'src'     => '{protocol}://coub.com/embed/{1}?muted=false&autostart=false&originalSize=false&hideTopBar=false',
+					'width'   => 640,
+					'height'  => 360,
+				),
+			),
+			'data'         => null,
+			'dataCallback' => null,
+		),
+
 		'kickstarter' => array(
 			'name'    => 'Kickstarter',
 			'type'    => 'video',
@@ -314,7 +336,7 @@ return array(
 			'render'  => array(
 				'sizeRatio' => 1.33,
 				'iframe'  => array(
-					'src'     => '{protocol}://kickstater.com/projects/{1}/{2}/widget/video.html',
+					'src'     => '{protocol}://kickstarter.com/projects/{1}/{2}/widget/video.html',
 					'scrolling' => 'no',
 					'width'   => 640,
 					'height'  => 480,
