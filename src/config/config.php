@@ -521,7 +521,20 @@ return array(
 			'render'  => array(
 				'sizeRatio' => 1.77,
 				'video' => array(
-					'src'      => '{1}.{2}',
+					'source'  => array(
+						array(
+							'type' => 'video/webm',
+							'src'  => '{protocol}://{1}.webm',
+						),
+						array(
+							'type' => 'video/ogg',
+							'src'  => '{protocol}://{1}.ogg',
+						),
+						array(
+							'type' => 'video/mp4',
+							'src'  => '{protocol}://{1}.mp4',
+						)
+					),
 					'width'    => 560,
 					'height'   => 315,
 					'controls' => 'controls',

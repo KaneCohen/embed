@@ -99,5 +99,12 @@ class EmbedTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('<iframe src="http://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&wmode=transparent" width="560" height="315" allowfullscreen="" frameborder="0"></iframe>', $this->embed->getIframe());
 	}
 
+	public function testHTML5VideoGeneration()
+	{
+		$this->embed->setUrl('http://example.com/hello.mp4')->parseUrl();
+
+		$this->assertEquals('<video width="560" height="315" controls="controls"><source type="video/webm" src="http://example.com/hello.webm"></source><source type="video/ogg" src="http://example.com/hello.ogg"></source><source type="video/mp4" src="http://example.com/hello.mp4"></source></video>', $this->embed->getHtml());
+	}
+
 
 }

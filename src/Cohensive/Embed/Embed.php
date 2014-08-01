@@ -353,16 +353,43 @@ class Embed
 			$video = '<video';
 
 			foreach ($this->provider['render']['video'] as $attribute => $val) {
-				$video .= sprintf(' %s="%s"', $attribute, $val);
+				if (! is_array($val)) {
+					$video .= sprintf(' %s="%s"', $attribute, $val);
+				}
 			}
+			// Close start of video tag.
+			$video .='>';
 
-			// Close video tag.
-			$video .='></video>';
+			// Add inner elements.
+			$video .= $this->forgeInnerElements($this->provider['render']['video'], true);
+
+			// Wrap video tag.
+			$video .= '</video>';
 
 			$video .= $this->forgeScript();
 
 			return $video;
 		}
+	}
+
+	private function forgeInnerElements($attributes = array(), $initial = false, $tag = null)
+	{
+		$output = '';
+		// Add inner elements.
+		$l = count($attributes);
+		$i = 0;
+		foreach ($attributes as $key => $val) {
+			$i++;
+			if (is_array($val) && ! is_numeric($key)) {
+				$output .= $this->forgeInnerElements($val, false, $key);
+			} elseif (is_array($val)) {
+				$output .=  "<$tag " . $this->forgeInnerElements($val) . "></$tag>";
+			} elseif (! $initial) {
+				$output .= "$key=\"$val\"";
+				if ($i !== $l) $output .= ' ';
+			}
+		}
+		return $output;
 	}
 
 	/**
