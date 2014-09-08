@@ -174,7 +174,10 @@ return array(
 			'type'    => 'video',
 			'website' => 'http://vimeo.com',
 			'ssl'     => false,
-			'url'     => '(https?://)?(?:www\.)?vimeo\.com/([0-9]+)',
+			'url'     => array(
+				'(https?://)?(?:www\.)?vimeo\.com/([0-9]+)',
+				'(https?://)?(?:www\.)?vimeo\.com/m/([0-9]+)'
+			),
 			'info'    => array(
 				'id'     => '{1}',
 				'url'    => '{protocol}://vimeo.com/{1}',
