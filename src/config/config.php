@@ -546,6 +546,56 @@ return array(
 			'data'         => null,
 			'dataCallback' => null,
 		),
+
+		'gfycat' => array(
+			'name'    => 'gfycat',
+			'type'    => 'video',
+			'website' => 'http://gfycat.com',
+			'ssl'     => false,
+			'url'     => array(
+				'^(https?://)?(?:www\.)?gfycat\.com/([a-zA-Z]+)'
+			),
+			'info'    => array(
+				'id'    => '{1}',
+				'url'   => '{protocol}://gfycat.com/{1}'
+			),
+			'render'  => array(
+				'sizeRatio' => 1.64,
+				'iframe'  => array(
+					'src'     => '{protocol}://gfycat.com/ifr/{1}',
+					'scrolling' => 'no',
+					'width'   => 670,
+					'height'  => 390,
+				),
+			),
+			'data'         => null,
+			'dataCallback' => null,
+		),
+
+		'web.tv' => array(
+			'name'    => 'web.tv',
+			'type'    => 'video',
+			'website' => 'http://web.tv',
+			'ssl'     => false,
+			'url'     => array(
+				'^(https?://)?(\w+\.?)?web\.tv/.*__([a-zA-Z0-9]+)$'
+			),
+			'info'    => array(
+				'id'    => '{2}',
+				'url'   => '{protocol}://{1}web.tv/embed/{2}'
+			),
+			'render'  => array(
+				'sizeRatio' => 1.64,
+				'iframe'  => array(
+					'src'     => '{protocol}://{1}web.tv/embed/{2}',
+					'scrolling' => 'no',
+					'width'   => 670,
+					'height'  => 390,
+				),
+			),
+			'data'         => null,
+			'dataCallback' => null,
+		),
 	)
 
 );
