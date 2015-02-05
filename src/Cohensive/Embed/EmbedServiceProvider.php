@@ -16,8 +16,10 @@ class EmbedServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $source = __DIR__ . '/../../config/config.php';
+        $this->mergeConfigFrom($source, 'embed');
         $this->publishes([
-            __DIR__ . '/../../config/config.php' => config_path('embed.php')
+            $source => config_path('embed.php')
         ]);
     }
 
@@ -29,7 +31,7 @@ class EmbedServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('embed', function($app) {
-            return new Factory($app['config']['embed.providers']);
+            return new Factory($app->config->get('embed.providers'));
         });
     }
 
