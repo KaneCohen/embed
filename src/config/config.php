@@ -7,12 +7,12 @@ return [
      | SSL
      |--------------------------------------------------------------------------
      |
-     | By default (false], Embed will use SSL (https) based on specific
+     | By default (false), Embed will use SSL (https) based on specific
      | provider support for SSL and input URL. Input URL must explicitly
      | use "https" to enable SSL for resulting embed element.
      |
      | If ssl is set to true, then Embed will try to use SSL on any provider
-     | that supports it.
+     | that supports it no matter what url has been provided.
      |
     */
 

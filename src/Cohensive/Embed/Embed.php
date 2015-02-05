@@ -77,18 +77,18 @@ class Embed
      * Create Embed instance.
      *
      * @param  string  $url
-     * @param  mixed  $config
+     * @param  mixed   $options
      * @return void
      */
-    public function __construct($url = null, $config = null)
+    public function __construct($url = null, $options = null)
     {
         if (! is_null($url)) {
             $this->setUrl($url);
         }
 
-        if (! is_null($config)) {
-            $this->attributes = isset($config['attributes']) ? $config['attributes'] : null;
-            $this->params = isset($config['params']) ? $config['params'] : null;
+        if (! is_null($options)) {
+            $this->attributes = isset($options['attributes']) ? $options['attributes'] : null;
+            $this->params = isset($options['params']) ? $options['params'] : null;
         }
     }
 
