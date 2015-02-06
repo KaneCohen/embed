@@ -6,8 +6,18 @@ Generate media html (YouTube, Vimeo, Kickstarter etc.) based on the url.
 
 Add following require to your `composer.json` file:
 
+For Laravel 5:
+
 ~~~
     "cohensive/embed": "dev-master"
+    // or
+    "cohensive/embed": "5.0.*"
+~~~
+
+For Laravel 4:
+
+~~~
+    "cohensive/embed": "4.2.*"
 ~~~
 
 Then run `composer install` or `composer update` to download it and autoload.
