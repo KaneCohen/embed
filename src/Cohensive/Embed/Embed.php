@@ -323,8 +323,8 @@ class Embed
             if ( isset($this->provider['render']['object']['embed']) ) {
                 $object .= '<embed';
                 // embed can have same attributes as object itself (height, width etc)
-                foreach ($this->provider['render']['object']['embed'] as $ettribute => $val) {
-                    $val = ( is_bool($val) && $val ? 'true' : 'false' );
+                foreach ($this->provider['render']['object']['embed'] as $attribute => $val) {
+                    $val = ( is_bool($val) && $val ? ($val ? 'true' : 'false') : $val );
                     $object .= sprintf(' %s="%s"', $attribute, $val);
                 }
                 $object .= '></embed>';
