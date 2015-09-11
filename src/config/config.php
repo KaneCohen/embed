@@ -20,6 +20,16 @@ return [
 
     /*
      |--------------------------------------------------------------------------
+     | Google API Key.
+     |--------------------------------------------------------------------------
+     |
+     | Ensure you have enabled YouTube Data API v3.
+     |
+     */
+    'google_api_key' => 'YOUR API KEY HERE',
+
+    /*
+     |--------------------------------------------------------------------------
      | Media Providers
      |--------------------------------------------------------------------------
      |
@@ -92,7 +102,7 @@ return [
             'info'    => [
                 'id'     => '{1}',
                 'url'    => '{protocol}://youtu.be/{1}',
-                'dataUrl' => '{protocol}://gdata.youtube.com/feeds/api/videos/{1}?v=2&alt=jsonc',
+                'dataUrl' => '{protocol}://www.googleapis.com/youtube/v3/videos?part=snippet&id={1}',
                 'imageRoot'   => '{protocol}://img.youtube.com/vi/{1}/',
             ],
             'render'  => [
@@ -130,17 +140,18 @@ return [
             'data' => null,
             'dataCallback' => function($embed) {
                 $provider = $embed->getProvider();
-                $url = $provider['info']['dataUrl'];
-                $response = json_decode(file_get_contents($url));
+                $url = $provider->info->dataUrl . '&key=' . config('embed.google_api_key');
+                $response = json_decode(file_get_contents($url))->items[0];
+
                 return [
-                    'title'  => $response->data->title,
-                    'description' => $response->data->description,
-                    'created_at'  => $response->data->uploaded,
+                    'title' => $response->snippet->title,
+                    'description' => $response->snippet->description,
+                    'created_at' => $response->snippet->publishedAt,
                     'image' => [
-                        'small'  => $response->data->thumbnail->sqDefault,
-                        'medium' => $provider['info']['imageRoot'].'mqdefault.jpg',
-                        'large'  => $response->data->thumbnail->hqDefault,
-                        'max'       => $provider['info']['imageRoot'].'maxresdefault.jpg',
+                        'small' => $response->snippet->thumbnails->default->url,
+                        'medium' => $response->snippet->thumbnails->medium->url,
+                        'large' => $response->snippet->thumbnails->high->url,
+                        'max' => $response->snippet->thumbnails->maxres->url,
                     ],
                     'full' => $response,
                 ];
@@ -195,8 +206,9 @@ return [
             ],
             'data' => null,
             'dataCallback' => function($embed) {
-                $url = $embed->getProvider()['info']['dataUrl'];
+                $url = $embed->getProvider()->info->dataUrl;
                 $response = json_decode(file_get_contents($url))[0];
+
                 return [
                     'title'  => $response->title,
                     'description' => $response->description,
