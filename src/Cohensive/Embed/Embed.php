@@ -32,13 +32,6 @@ class Embed
     protected $params;
 
     /**
-     * Flag indicating if Embed should work with SSL protocols if available.
-     *
-     * @var string
-     */
-    protected $ssl;
-
-    /**
      * Config with all available providers.
      *
      * @var array
@@ -158,10 +151,11 @@ class Embed
             throw new \Exception('Cannot detect protocol if URL or provider were not set.');
         }
 
-        // If provider does not support SSL, stop here and use http.
-        if (! $this->cachedProvider['ssl']) {
-            $this->protocol = 'http';
-        } elseif ($protocol === 'https://' || $this->ssl) {
+        // If provider supports SSL - use it. There's no excuse in not using it.
+        if ($this->cachedProvider['ssl']) {
+            $this->protocol = 'https';
+        } elseif ($protocol === 'https://') {
+            // If provider doesn't have SSL flag, but url contains SSL - use it.
             $this->protocol = 'https';
         } else {
             $this->protocol = 'http';
@@ -519,28 +513,6 @@ class Embed
     public function getVideo()
     {
         return $this->forgeVideo();
-    }
-
-    /**
-     * Set up SSL flag.
-     *
-     * @param  bool  $ssl
-     * @return \Cohensive\Embed\Embed
-     */
-    public function setSSL($ssl)
-    {
-        $this->ssl = (bool) $ssl;
-        return $this;
-    }
-
-    /**
-     * Get current SSL flag.
-     *
-     * @return boold
-     */
-    public function getSSL()
-    {
-        return $this->ssl;
     }
 
     /**

@@ -13,13 +13,6 @@ class Factory
     protected $providers;
 
     /**
-     * SSL flag forcing SSL-only URIs.
-     *
-     * @var array
-     */
-    protected $ssl;
-
-    /**
      * Create Embed factory and set providers from config.
      *
      * @param  array  $config
@@ -28,7 +21,6 @@ class Factory
     public function __construct(array $config)
     {
         $this->providers = $config['providers'];
-        $this->ssl = $config['ssl'];
     }
 
     /**
@@ -42,7 +34,6 @@ class Factory
     {
         $embed = new Embed($url, $options);
         $embed->setProviders($this->providers);
-        $embed->setSSL($this->ssl);
 
         return $embed;
     }

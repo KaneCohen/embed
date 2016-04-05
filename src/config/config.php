@@ -4,22 +4,6 @@ return [
 
     /*
      |--------------------------------------------------------------------------
-     | SSL
-     |--------------------------------------------------------------------------
-     |
-     | By default (false), Embed will use SSL (https) based on specific
-     | provider support for SSL and input URL. Input URL must explicitly
-     | use "https" to enable SSL for resulting embed element.
-     |
-     | If ssl is set to true, then Embed will try to use SSL on any provider
-     | that supports it no matter what url has been provided.
-     |
-    */
-
-    'ssl' => false,
-
-    /*
-     |--------------------------------------------------------------------------
      | Google API Key.
      |--------------------------------------------------------------------------
      |
@@ -184,7 +168,7 @@ return [
             'name'    => 'Vimeo',
             'type'    => 'video',
             'website' => 'http://vimeo.com',
-            'ssl'     => false,
+            'ssl'     => true,
             'url'     => [
                 '(https?://)?(?:www\.)?vimeo\.com/([0-9]+)',
                 '(https?://)?(?:www\.)?vimeo\.com/m/([0-9]+)'
@@ -415,7 +399,7 @@ return [
             'name'    => 'Twitch Archive',
             'type'    => 'video',
             'website' => 'http://twitch.tv',
-            'ssl'     => false,
+            'ssl'     => true,
             'url'     => [
                 '^(https?://)?(?:www\.)?twitch\.tv/([^"]+)/b/([0-9]+)'
             ],
@@ -452,7 +436,7 @@ return [
             'name'    => 'Twitch Archive',
             'type'    => 'video',
             'website' => 'http://twitch.tv',
-            'ssl'     => false,
+            'ssl'     => true,
             'url'     => [
                 '^(https?://)?(?:www\.)?twitch\.tv/([^"]+)/c/([0-9]+)'
             ],
@@ -489,7 +473,7 @@ return [
             'name'    => 'Twitch',
             'type'    => 'video',
             'website' => 'http://twitch.tv',
-            'ssl'     => false,
+            'ssl'     => true,
             'url'     => [
                 '^(https?://)?(?:www\.)?twitch\.tv/([0-9a-zA-Z-_]+)'
             ],
@@ -525,7 +509,7 @@ return [
             'name'    => 'HTML5 video',
             'type'    => 'video',
             'website' => '',
-            'ssl'     => true,
+            'ssl'     => false,
             'url'     => [
                 '^(https?://)?(.*).(mp4|ogg|webm)$'
             ],
