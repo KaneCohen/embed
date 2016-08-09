@@ -19,7 +19,7 @@ class EmbedServiceProvider extends ServiceProvider
     public function register()
     {
         $this->package('cohensive/embed');
-        $this->app->bindShared('embed', function($app) {
+        $this->app->singleton('embed', function($app) {
             return new Factory($app);
         });
     }
