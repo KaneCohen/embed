@@ -17,7 +17,7 @@ For Laravel 5:
 For Laravel 4:
 
 ~~~
-    "cohensive/embed": "4.2.*"
+    "cohensive/embed": "4.3.1"
 ~~~
 
 Then run `composer install` or `composer update` to download it and autoload.
