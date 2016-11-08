@@ -80,8 +80,8 @@ return [
             'website' => 'http://youtube.com',
             'ssl'     => true,
             'url'     => [
-                '^(https?://)?(?:www\.)?youtu\.be/([0-9a-zA-Z-_]{11})',
-                '^(https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$'
+                '^(https?://)?(?:www\.)?youtu\.be/([0-9a-zA-Z-_]{11})?(?:(?:\S+)?(?:\?|&)t=([0-9hm]+s))?(?:\S+)?',
+                '^(https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=|watch\?.+&v=))((?:\w|-){11})(?:(?:\S+)?(?:\?|&)t=([0-9hm]+s))?(?:\S+)?$'
             ],
             'info'    => [
                 'id'     => '{1}',
@@ -93,7 +93,7 @@ return [
                 // iframe attributes
                 'sizeRatio' => 1.77,
                 'iframe' => [
-                    'src'     => '{protocol}://www.youtube.com/embed/{1}?rel=0&wmode=transparent',
+                    'src'     => '{protocol}://www.youtube.com/embed/{1}?rel=0&wmode=transparent{&t=2}',
                     'width'   => 560,
                     'height'  => 315,
                     'allowfullscreen' => null,
@@ -105,14 +105,14 @@ return [
                         'height'  => 315,
                     ],
                     'params'  => [
-                        'movie' => '{protocol}://youtube.com/v/{1}?version=3&rel=0&wmode=transparent',
+                        'movie' => '{protocol}://youtube.com/v/{1}?version=3&rel=0&wmode=transparent{&t=2}',
                         'wMode' => 'transparent',
                         'allowFullScreen'   => 'true',
                         'allowscriptaccess' => 'always',
                     ],
                     // embed shares same attributes as object iteslf, but may have some of it's own attributes
                     'embed'   => [
-                        'src'     => '{protocol}://youtube.com/v/{1}?version=3&rel=0&wmode=transparent',
+                        'src'     => '{protocol}://youtube.com/v/{1}?version=3&rel=0&wmode=transparent{&t=2}',
                         'width'   => 560,
                         'height'  => 315,
                         'type' => 'application/x-shockwave-flash',

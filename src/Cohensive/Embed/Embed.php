@@ -192,8 +192,13 @@ class Embed
             } else {
                 $array[$key] = str_replace('{protocol}', $this->protocol, $array[$key]);
                 for ($i=1; $i<count($matches); $i++) {
-                    $array[$key] = str_replace('{'.$i.'}', $matches[$i], $array[$key]);
+                    if (strpos($array[$key], '{'.$i.'}') !== false) {
+                        $array[$key] = str_replace('{'.$i.'}', $matches[$i], $array[$key]);
+                    } else {
+                        $array[$key] = preg_replace('/\{(\S+)?'.$i.'(\S+)?\}/i', '${1}' . $matches[$i] . '${2}', $array[$key], -1, $replaced);
+                    }
                 }
+                $array[$key] = preg_replace('/\{(\S+)?\d+(\S+)?\}/i', '', $array[$key]);
             }
         }
 
