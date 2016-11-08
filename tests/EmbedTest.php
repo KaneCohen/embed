@@ -36,6 +36,41 @@ class EmbedTest extends PHPUnit_Framework_TestCase {
     }
 
 
+    public function testEmbedUrlSettingWithTimestamp()
+    {
+        $params = $this->embed->setUrl('http://youtu.be/dQw4w9WgXcQ?t=24m10s')
+            ->parseUrl()
+            ->getProvider();
+        $this->assertEquals('https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&wmode=transparent&t=24m10s', $params->render->iframe->src);
+
+        $params = $this->embed->setUrl('http://youtu.be/dQw4w9WgXcQ?t=56s')
+            ->parseUrl()
+            ->getProvider();
+        $this->assertEquals('https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&wmode=transparent&t=56s', $params->render->iframe->src);
+
+        $params = $this->embed->setUrl('http://youtu.be/dQw4w9WgXcQ?t=1h20m57s')
+            ->parseUrl()
+            ->getProvider();
+        $this->assertEquals('https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&wmode=transparent&t=1h20m57s', $params->render->iframe->src);
+
+        $params = $this->embed->setUrl('http://youtu.be/dQw4w9WgXcQ?x=1&t=24m10s')
+            ->parseUrl()
+            ->getProvider();
+        $this->assertEquals('https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&wmode=transparent&t=24m10s', $params->render->iframe->src);
+
+        $params = $this->embed->setUrl('http://youtube.com/watch?v=dQw4w9WgXcQ&t=24m10s')
+            ->parseUrl()
+            ->getProvider();
+        $this->assertEquals('https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&wmode=transparent&t=24m10s', $params->render->iframe->src);
+
+
+        $params = $this->embed->setUrl('http://youtube.com/v/dQw4w9WgXcQ?t=24m10s')
+            ->parseUrl()
+            ->getProvider();
+        $this->assertEquals('https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&wmode=transparent&t=24m10s', $params->render->iframe->src);
+    }
+
+
     public function testEmbedParamAndAttributeSetting()
     {
         $embed = new Embed('http://youtu.be/dQw4w9WgXcQ', array(
