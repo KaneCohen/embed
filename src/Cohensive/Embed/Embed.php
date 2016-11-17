@@ -68,6 +68,13 @@ class Embed
     protected $cachedMatches;
 
     /**
+     * Video timestmap if available.
+     *
+     * @var string
+     */
+    protected $timestamp;
+
+    /**
      * Create Embed instance.
      *
      * @param  string  $url
@@ -175,7 +182,6 @@ class Embed
         return $this;
     }
 
-
     /**
      * Parse found provider and replace {x} parts with parsed code.
      *
@@ -190,19 +196,34 @@ class Embed
             if (is_array($val)) {
                 $array[$key] = $this->parseProvider($val, $matches);
             } else {
-                $array[$key] = str_replace('{protocol}', $this->protocol, $array[$key]);
+                $array[$key] = str_replace('{protocol}', $this->protocol, $array[$key]) . $this->timestamp;
                 for ($i=1; $i<count($matches); $i++) {
-                    if (strpos($array[$key], '{'.$i.'}') !== false) {
-                        $array[$key] = str_replace('{'.$i.'}', $matches[$i], $array[$key]);
-                    } else {
-                        $array[$key] = preg_replace('/\{(\S+)?'.$i.'(\S+)?\}/i', '${1}' . $matches[$i] . '${2}', $array[$key], -1, $replaced);
-                    }
+                    $array[$key] = str_replace('{'.$i.'}', $matches[$i], $array[$key]);
                 }
-                $array[$key] = preg_replace('/\{(\S+)?\d+(\S+)?\}/i', '', $array[$key]);
             }
         }
 
         return $array;
+    }
+
+    /**
+     * Parse found provider and add timestamp to render sources.
+     *
+     * @return array $array
+     */
+    protected function parseTimestamp(&$provider)
+    {
+        if (isset($provider['timestamp'])) {
+            if (preg_match('~'.$provider['timestamp'].'~imu', $this->url, $matches)) {
+                unset($matches[0]);
+                $multipliers = [3600, 60, 1];
+                $timestamp = 0;
+                foreach (array_values($matches) as $key => $match) {
+                    $timestamp += (int) $match * $multipliers[$key];
+                }
+                $this->timestamp = $provider['timestampParam'] . $timestamp;
+            }
+        }
     }
 
     /**
@@ -216,6 +237,7 @@ class Embed
             $this->matches = $this->cachedMatches;
             $this->provider = $this->cachedProvider;
             $this->parseProtocol($this->matches);
+            $this->parseTimestamp($this->provider);
             $this->parseProvider($this->provider['info'], $this->matches);
             $this->parseProvider($this->provider['render'], $this->matches);
 
