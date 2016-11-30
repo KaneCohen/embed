@@ -11,13 +11,13 @@ For Laravel 5:
 ~~~
     "cohensive/embed": "dev-master"
     // or
-    "cohensive/embed": "5.0.*"
+    "cohensive/embed": "5.3.*"
 ~~~
 
 For Laravel 4:
 
 ~~~
-    "cohensive/embed": "4.3.1"
+    "cohensive/embed": "4.3.*"
 ~~~
 
 Then run `composer install` or `composer update` to download it and autoload.
