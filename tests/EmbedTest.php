@@ -144,14 +144,10 @@ class EmbedTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('<amp-iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&wmode=transparent" width="560" height="315" allowfullscreen="" frameborder="0" sandbox="allow-scripts allow-same-origin allow-presentation" layout="responsive"></amp-iframe>', $this->embed->getIframe());
     }
 
-<<<<<<< HEAD
-
-=======
     public function testAMPHTML5VideoGeneration()
     {
         $this->embed->setUrl('http://example.com/hello.mp4')->parseUrl();
 
         $this->assertEquals('<amp-video width="560" height="315" controls="controls" layout="responsive"><source type="video/webm" src="http://example.com/hello.webm"></source><source type="video/ogg" src="http://example.com/hello.ogg"></source><source type="video/mp4" src="http://example.com/hello.mp4"></source></amp-video>', $this->embed->getAmpHtml());
     }
->>>>>>> 8a80072... Add AMP mode html generation.
 }
