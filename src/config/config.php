@@ -47,6 +47,8 @@ return array(
                     'height'  => 315,
                     'allowfullscreen' => null,
                     'frameborder'     => 0,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data' => null,
@@ -74,6 +76,8 @@ return array(
                     'height'  => 315,
                     'allowfullscreen' => null,
                     'frameborder'     => 0,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data' => null,
@@ -106,6 +110,8 @@ return array(
                     'height'  => 315,
                     'allowfullscreen' => null,
                     'frameborder'     => 0,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
                 'object'  => array(
                     'attributes' => array(
@@ -165,6 +171,8 @@ return array(
                     'src'     => '{protocol}://liveleak.com/ll_embed?f={1}',
                     'width'   => 640,
                     'height'  => 360,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -193,6 +201,8 @@ return array(
                     'height'  => 281,
                     'allowfullscreen' => null,
                     'frameborder'     => 0,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data' => null,
@@ -230,6 +240,8 @@ return array(
                     'src'     => '{protocol}://www.dailymotion.com/embed/video/{1}',
                     'width'   => 520,
                     'height'  => 420,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -252,6 +264,8 @@ return array(
                     'src'     => '{protocol}://media.mtvnservices.com/embed/{1}{2}',
                     'width'   => 560,
                     'height'  => 315,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -274,6 +288,8 @@ return array(
                     'src'     => '{protocol}://widgets.ign.com/video/embed/content.html?url={1}',
                     'width'   => 560,
                     'height'  => 315,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -298,6 +314,8 @@ return array(
                     'src'     => '{protocol}://vine.co/v/{1}/embed/postcard',
                     'width'   => 600,
                     'height'  => 600,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -320,6 +338,8 @@ return array(
                     'src'     => '{protocol}://coub.com/embed/{1}?muted=false&autostart=false&originalSize=false&hideTopBar=false',
                     'width'   => 640,
                     'height'  => 360,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -345,6 +365,8 @@ return array(
                     'scrolling' => 'no',
                     'width'   => 640,
                     'height'  => 480,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -370,6 +392,8 @@ return array(
                     'scrolling' => 'no',
                     'width'   => 670,
                     'height'  => 390,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -395,6 +419,8 @@ return array(
                     'scrolling' => 'no',
                     'width'   => 670,
                     'height'  => 390,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -543,6 +569,7 @@ return array(
                     'width'    => 560,
                     'height'   => 315,
                     'controls' => 'controls',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -568,6 +595,8 @@ return array(
                     'scrolling' => 'no',
                     'width'   => 670,
                     'height'  => 390,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,
@@ -593,6 +622,8 @@ return array(
                     'scrolling' => 'no',
                     'width'   => 670,
                     'height'  => 390,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive'
                 ),
             ),
             'data'         => null,

@@ -75,6 +75,14 @@ class Embed
     protected $timestamp;
 
     /**
+     * AMP mode.
+     * https://www.ampproject.org/
+     *
+     * @var bool
+     */
+    protected $ampMode;
+
+    /**
      * Create Embed instance.
      *
      * @param  string  $url
@@ -300,15 +308,16 @@ class Embed
     {
         // Check if we have an iframe creation array.
         if ($this->provider && isset($this->provider['render']['iframe'])) {
+            $tag = $this->ampMode ? 'amp-iframe' : 'iframe';
             // Start iframe tag.
-            $iframe = '<iframe';
+            $iframe = "<$tag";
 
             foreach ($this->provider['render']['iframe'] as $attribute => $val) {
                 $iframe .= sprintf(' %s="%s"', $attribute, $val);
             }
 
             // Close iframe tag.
-            $iframe .='></iframe>';
+            $iframe .= "></$tag>";
 
             $iframe .= $this->forgeScript();
 
@@ -369,8 +378,10 @@ class Embed
     {
         // Check if we have a video creation array.
         if ($this->provider && isset($this->provider['render']['video'])) {
+            $tag = $this->ampMode ? 'amp-video' : 'video';
+
             // Start iframe tag.
-            $video = '<video';
+            $video = "<$tag";
 
             foreach ($this->provider['render']['video'] as $attribute => $val) {
                 if (! is_array($val)) {
@@ -384,7 +395,7 @@ class Embed
             $video .= $this->forgeInnerElements($this->provider['render']['video'], true);
 
             // Wrap video tag.
-            $video .= '</video>';
+            $video .= "</$tag>";
 
             $video .= $this->forgeScript();
 
@@ -507,9 +518,27 @@ class Embed
      */
     public function getHtml()
     {
+        $prevAmpMode = $this->ampMode;
+        $this->disableAmpMode();
         if ($html = $this->forgeIframe()) return $html;
         if ($html = $this->forgeVideo()) return $html;
         if ($html = $this->forgeObject()) return $html;
+        $this->ampMode = $prevAmpMode;
+    }
+
+    /**
+     * Generate AMP html code for embed.
+     *
+     * @return string
+     */
+    public function getAmpHtml()
+    {
+        $prevAmpMode = $this->ampMode;
+        $this->enableAmpMode();
+        if ($html = $this->forgeIframe()) return $html;
+        if ($html = $this->forgeVideo()) return $html;
+        if ($html = $this->forgeObject()) return $html;
+        $this->ampMode = $prevAmpMode;
     }
 
     /**
@@ -574,4 +603,34 @@ class Embed
         return json_decode(json_encode($this->provider));
     }
 
+    /**
+     * Sets AMP mode.
+     *
+     * @param bool $ampMode
+     * @return void
+     */
+    public function setAmpMode($ampMode)
+    {
+        $this->ampMode = $ampMode;
+    }
+
+    /**
+     * Enables AMP mode.
+     *
+     * @return void
+     */
+    public function enableAmpMode()
+    {
+        $this->ampMode = true;
+    }
+
+    /**
+     * Disables AMP mode.
+     *
+     * @return void
+     */
+    public function disableAmpMode()
+    {
+        $this->ampMode = false;
+    }
 }
