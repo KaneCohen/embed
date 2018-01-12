@@ -250,7 +250,7 @@ class Embed
             $this->parseProvider($this->provider['render'], $this->matches);
 
             if (isset($this->attributes['width']) && ! isset($this->attributes['height'])) {
-                $this->attributes['height'] = $this->attributes['width']/$this->provider['render']['sizeRatio'];
+                $this->attributes['height'] = (int) $this->attributes['width']/ (double) $this->provider['render']['sizeRatio'];
             }
 
             if (! is_null($this->attributes)) {
