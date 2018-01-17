@@ -550,16 +550,16 @@ return [
                 'video' => [
                     'source'  => [
                         [
-                            'type' => 'video/webm',
                             'src'  => '{protocol}://{1}.webm',
+                            'type' => 'video/webm',
                         ],
                         [
-                            'type' => 'video/ogg',
                             'src'  => '{protocol}://{1}.ogg',
+                            'type' => 'video/ogg',
                         ],
                         [
-                            'type' => 'video/mp4',
                             'src'  => '{protocol}://{1}.mp4',
+                            'type' => 'video/mp4',
                         ]
                     ],
                     'width'    => 560,
