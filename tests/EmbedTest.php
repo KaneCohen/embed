@@ -75,6 +75,7 @@ class EmbedTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&wmode=transparent&start=1450', $params->render->iframe->src);
     }
 
+
     public function testEmbedParamAndAttributeSetting()
     {
         $embed = new Embed('http://youtu.be/dQw4w9WgXcQ', array(
@@ -132,7 +133,7 @@ class EmbedTest extends PHPUnit_Framework_TestCase {
     {
         $this->embed->setUrl('http://example.com/hello.mp4')->parseUrl();
 
-        $this->assertEquals('<video width="560" height="315" controls="controls" layout="responsive"><source type="video/webm" src="http://example.com/hello.webm"></source><source type="video/ogg" src="http://example.com/hello.ogg"></source><source type="video/mp4" src="http://example.com/hello.mp4"></source></video>', $this->embed->getHtml());
+        $this->assertEquals('<video width="560" height="315" controls="controls" layout="responsive"><source src="http://example.com/hello.webm" type="video/webm"></source><source src="http://example.com/hello.ogg" type="video/ogg"></source><source src="http://example.com/hello.mp4" type="video/mp4"></source></video>', $this->embed->getHtml());
     }
 
     public function testAMPEmbedHTMLGeneration()
@@ -147,6 +148,13 @@ class EmbedTest extends PHPUnit_Framework_TestCase {
     {
         $this->embed->setUrl('http://example.com/hello.mp4')->parseUrl();
 
-        $this->assertEquals('<amp-video width="560" height="315" controls="controls" layout="responsive"><source type="video/webm" src="http://example.com/hello.webm"></source><source type="video/ogg" src="http://example.com/hello.ogg"></source><source type="video/mp4" src="http://example.com/hello.mp4"></source></amp-video>', $this->embed->getAmpHtml());
+        $this->assertEquals('<amp-video width="560" height="315" controls="controls" layout="responsive"><source src="http://example.com/hello.webm" type="video/webm"></source><source src="http://example.com/hello.ogg" type="video/ogg"></source><source src="http://example.com/hello.mp4" type="video/mp4"></source></amp-video>', $this->embed->getAmpHtml());
+    }
+
+    public function testAMPHTML5SSLVideoGeneration()
+    {
+        $this->embed->setUrl('https://example.com/hello.mp4')->parseUrl();
+
+        $this->assertEquals('<amp-video width="560" height="315" controls="controls" layout="responsive"><source src="https://example.com/hello.webm" type="video/webm"></source><source src="https://example.com/hello.ogg" type="video/ogg"></source><source src="https://example.com/hello.mp4" type="video/mp4"></source></amp-video>', $this->embed->getAmpHtml());
     }
 }
