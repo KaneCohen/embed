@@ -167,11 +167,12 @@ class Embed
             throw new \Exception('Cannot detect protocol if URL or provider were not set.');
         }
 
-        // If provider does not support SSL, stop here and use http.
+        // If provider supports SSL - use it. There's no excuse in not using it.
         if ($this->cachedProvider['ssl']) {
             $this->protocol = 'https';
         } elseif ($protocol === 'https://') {
-            $this->protocol = 'http';
+            // If provider doesn't have SSL flag, but url contains SSL - use it.
+            $this->protocol = 'https';
         } else {
             $this->protocol = 'http';
         }
@@ -250,7 +251,7 @@ class Embed
             $this->parseProvider($this->provider['render'], $this->matches);
 
             if (isset($this->attributes['width']) && ! isset($this->attributes['height'])) {
-                $this->attributes['height'] = $this->attributes['width']/$this->provider['render']['sizeRatio'];
+                $this->attributes['height'] = (int) $this->attributes['width']/(double) $this->provider['render']['sizeRatio'];
             }
 
             if (! is_null($this->attributes)) {

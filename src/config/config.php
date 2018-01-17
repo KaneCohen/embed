@@ -554,16 +554,16 @@ return array(
                 'video' => array(
                     'source'  => array(
                         array(
-                            'type' => 'video/webm',
                             'src'  => '{protocol}://{1}.webm',
+                            'type' => 'video/webm',
                         ),
                         array(
-                            'type' => 'video/ogg',
                             'src'  => '{protocol}://{1}.ogg',
+                            'type' => 'video/ogg',
                         ),
                         array(
-                            'type' => 'video/mp4',
                             'src'  => '{protocol}://{1}.mp4',
+                            'type' => 'video/mp4',
                         )
                     ),
                     'width'    => 560,
