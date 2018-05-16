@@ -1,8 +1,17 @@
 <?php
 namespace Cohensive\Embed;
 
+use Closure;
+
 class Embed
 {
+    /**
+     * Embed configs.
+     *
+     * @var array
+     */
+    protected $config;
+
     /**
      * Current url protocol.
      *
@@ -88,7 +97,7 @@ class Embed
      * @param  mixed   $options
      * @return void
      */
-    public function __construct($url = null, $options = null)
+    public function __construct($url = null, $options = null, array $config = null)
     {
         if (! is_null($url)) {
             $this->setUrl($url);
@@ -97,6 +106,10 @@ class Embed
         if (! is_null($options)) {
             $this->attributes = isset($options['attributes']) ? $options['attributes'] : null;
             $this->params = isset($options['params']) ? $options['params'] : null;
+        }
+
+        if (! is_null($config)) {
+            $this->setConfig($config);
         }
     }
 
@@ -178,6 +191,16 @@ class Embed
     }
 
     /**
+     * Alias for parseData method.
+     *
+     * @return void
+     */
+    public function fetchData()
+    {
+        return $this->parseData();
+    }
+
+    /**
      * Get remote data if available.
      *
      * @return \Cohensive\Embed\Embed
@@ -185,9 +208,32 @@ class Embed
     public function parseData()
     {
         if (isset($this->provider['dataCallback'])) {
-            $this->provider['data'] = $this->provider['dataCallback']($this);
+            if ($this->provider['dataCallback'] instanceof Closure) {
+                $this->provider['data'] = $this->provider['dataCallback']($this->getProvider());
+            } elseif (is_string($this->provider['dataCallback'])) {
+                $this->executeFetchingClassOrFunction($this->provider['dataCallback']);
+            }
         }
         return $this;
+    }
+
+    /**
+     * Executes class method or function which handles remote data fetching.
+     *
+     * @param string $target
+     * @return void
+     */
+    protected function executeFetchingClassOrFunction($target)
+    {
+        $provider = $this->getProvider();
+        $parts = explode('@', $target);
+
+        if (count($parts) === 1) {
+            $this->provider['data'] = $parts[0]($provider, $this->config);
+        } elseif (count($parts) === 2) {
+            $class = new $parts[0]($this, $this->config);
+            $this->provider['data'] = $class->{$parts[1]}($provider, $this->config);
+        }
     }
 
     /**
@@ -421,6 +467,19 @@ class Embed
             }
         }
         return $output;
+    }
+
+    /**
+     * Excplicitly set configs.
+     *
+     * @param  array  $config
+     * @return \Cohensive\Embed\Embed
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+
+        return $this;
     }
 
     /**

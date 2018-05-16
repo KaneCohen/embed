@@ -6,6 +6,13 @@ use Illuminate\Foundation\Application;
 class Factory
 {
     /**
+     * Configs.
+     *
+     * @var array
+     */
+    protected $config;
+
+    /**
      * Available embed providers.
      *
      * @var array
@@ -20,6 +27,7 @@ class Factory
      */
     public function __construct(array $config)
     {
+        $this->config = $config;
         $this->providers = $config['providers'];
     }
 
@@ -32,7 +40,7 @@ class Factory
      */
     public function make($url = null, $options = null)
     {
-        $embed = new Embed($url, $options);
+        $embed = new Embed($url, $options, $this->config);
         $embed->setProviders($this->providers);
 
         return $embed;

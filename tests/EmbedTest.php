@@ -157,4 +157,21 @@ class EmbedTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals('<amp-video width="560" height="315" controls="controls" layout="responsive"><source src="https://example.com/hello.webm" type="video/webm"></source><source src="https://example.com/hello.ogg" type="video/ogg"></source><source src="https://example.com/hello.mp4" type="video/mp4"></source></amp-video>', $this->embed->getAmpHtml());
     }
+
+    public function testVimeoParseData()
+    {
+        $this->embed->setUrl('https://vimeo.com/73116214')->parseUrl()->fetchData();
+
+        $this->assertTrue(is_object($this->embed->getProvider()->data));
+        $this->assertEquals('The Mayor of Times Square', $this->embed->getProvider()->data->title);
+    }
+
+    public function testYoutubeParseData()
+    {
+        $config = ['google_api_key' => '123456'];
+        $this->embed->setConfig($config)->setUrl('http://youtu.be/dQw4w9WgXcQ')->parseUrl()->fetchData();
+
+        // Expect fail since google api key is incorrect.
+        $this->assertFalse(is_object($this->embed->getProvider()->data));
+    }
 }

@@ -23,26 +23,26 @@ return [
 
     'providers' => [
         'youtubePlaylistVideo' => [
-            'name'    => 'YouTube Playlist',
-            'type'    => 'video',
+            'name' => 'YouTube Playlist',
+            'type' => 'video',
             'website' => 'http://youtube.com',
-            'ssl'     => true,
-            'url'     => '^(https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/watch\?v=)([0-9a-zA-Z-_]{11})(?:\S*list=)([0-9a-zA-Z-_]+)',
-            'info'    => [
-                'id'     => '{1}',
-                'url'    => '{protocol}://youtube.com/watch?v={1}&list={2}',
+            'ssl' => true,
+            'url' => '^(https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/watch\?v=)([0-9a-zA-Z-_]{11})(?:\S*list=)([0-9a-zA-Z-_]+)',
+            'info' => [
+                'id' => '{1}',
+                'url' => '{protocol}://youtube.com/watch?v={1}&list={2}',
             ],
-            'render'  => [
+            'render' => [
                 // iframe attributes
                 'sizeRatio' => 1.77,
                 'iframe' => [
-                    'src'     => '{protocol}://www.youtube.com/embed/{1}?list={2}&rel=0&wmode=transparent',
-                    'width'   => 560,
-                    'height'  => 315,
+                    'src' => '{protocol}://www.youtube.com/embed/{1}?list={2}&rel=0&wmode=transparent',
+                    'width' => 560,
+                    'height' => 315,
                     'allowfullscreen' => null,
-                    'frameborder'     => 0,
+                    'frameborder' => 0,
                     'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
-                    'layout' => 'responsive'
+                    'layout' => 'responsive',
                 ],
             ],
             'data' => null,
@@ -50,28 +50,28 @@ return [
         ],
 
         'youtubePlaylist' => [
-            'name'    => 'YouTube Playlist',
-            'type'    => 'video',
+            'name' => 'YouTube Playlist',
+            'type' => 'video',
             'website' => 'http://youtube.com',
-            'ssl'     => true,
-            'url'     => [
+            'ssl' => true,
+            'url' => [
                 '^(https?://)?(?:www\.)?youtube\.com/playlist\?list=([0-9a-zA-Z-_]+)',
             ],
-            'info'    => [
-                'id'     => '{1}',
-                'url'    => '{protocol}://youtube.com/playlist?list={1}',
+            'info' => [
+                'id' => '{1}',
+                'url' => '{protocol}://youtube.com/playlist?list={1}',
             ],
-            'render'  => [
+            'render' => [
                 // iframe attributes
                 'sizeRatio' => 1.77,
                 'iframe' => [
-                    'src'     => '{protocol}://www.youtube.com/embed/videoseries?list={1}&rel=0&wmode=transparent',
-                    'width'   => 560,
-                    'height'  => 315,
+                    'src' => '{protocol}://www.youtube.com/embed/videoseries?list={1}&rel=0&wmode=transparent',
+                    'width' => 560,
+                    'height' => 315,
                     'allowfullscreen' => null,
-                    'frameborder'     => 0,
+                    'frameborder' => 0,
                     'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
-                    'layout' => 'responsive'
+                    'layout' => 'responsive',
                 ],
             ],
             'data' => null,
@@ -79,216 +79,183 @@ return [
         ],
 
         'youtube' => [
-            'name'    => 'YouTube',
-            'type'    => 'video',
+            'name' => 'YouTube',
+            'type' => 'video',
             'website' => 'http://youtube.com',
-            'ssl'     => true,
-            'url'     => [
+            'ssl' => true,
+            'url' => [
                 '^(https?://)?(?:www\.)?youtu\.be/([0-9a-zA-Z-_]{11})?(?:(?:\S+)?(?:\?|&)t=([0-9hm]+s))?(?:\S+)?',
-                '^(https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=|watch\?.+&v=))((?:\w|-){11})(?:(?:\S+)?(?:\?|&)t=([0-9hm]+s))?(?:\S+)?$'
+                '^(https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=|watch\?.+&v=))((?:\w|-){11})(?:(?:\S+)?(?:\?|&)t=([0-9hm]+s))?(?:\S+)?$',
             ],
             'timestamp' => '^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/)(?:\S+)?(?:(?:\S+)?(?:\?|&)t=(?:([0-9]+)h)?(?:([0-9]+)m)?(?:([0-9]+)s)?)$',
             'timestampParam' => '&start=',
-            'info'    => [
-                'id'     => '{1}',
-                'url'    => '{protocol}://youtu.be/{1}',
+            'info' => [
+                'id' => '{1}',
+                'url' => '{protocol}://youtu.be/{1}',
                 'dataUrl' => '{protocol}://www.googleapis.com/youtube/v3/videos?part=snippet&id={1}',
-                'imageRoot'   => '{protocol}://img.youtube.com/vi/{1}/',
+                'imageRoot' => '{protocol}://img.youtube.com/vi/{1}/',
             ],
-            'render'  => [
+            'render' => [
                 // iframe attributes
                 'sizeRatio' => 1.77,
                 'iframe' => [
-                    'src'     => '{protocol}://www.youtube.com/embed/{1}?rel=0&wmode=transparent',
-                    'width'   => 560,
-                    'height'  => 315,
+                    'src' => '{protocol}://www.youtube.com/embed/{1}?rel=0&wmode=transparent',
+                    'width' => 560,
+                    'height' => 315,
                     'allowfullscreen' => null,
-                    'frameborder'     => 0,
+                    'frameborder' => 0,
                     'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
-                    'layout' => 'responsive'
+                    'layout' => 'responsive',
                 ],
-                'object'  => [
+                'object' => [
                     'attributes' => [
-                        'width'   => 560,
-                        'height'  => 315,
+                        'width' => 560,
+                        'height' => 315,
                     ],
-                    'params'  => [
+                    'params' => [
                         'movie' => '{protocol}://youtube.com/v/{1}?version=3&rel=0&wmode=transparent',
                         'wMode' => 'transparent',
-                        'allowFullScreen'   => 'true',
+                        'allowFullScreen' => 'true',
                         'allowscriptaccess' => 'always',
                     ],
                     // embed shares same attributes as object iteslf, but may have some of it's own attributes
-                    'embed'   => [
-                        'src'     => '{protocol}://youtube.com/v/{1}?version=3&rel=0&wmode=transparent',
-                        'width'   => 560,
-                        'height'  => 315,
+                    'embed' => [
+                        'src' => '{protocol}://youtube.com/v/{1}?version=3&rel=0&wmode=transparent',
+                        'width' => 560,
+                        'height' => 315,
                         'type' => 'application/x-shockwave-flash',
-                        'allowFullScreen'   => 'true',
+                        'allowFullScreen' => 'true',
                         'allowscriptaccess' => 'always',
                     ],
                 ],
             ],
             'data' => null,
-            'dataCallback' => function($embed) {
-                $provider = $embed->getProvider();
-                $url = $provider->info->dataUrl . '&key=' . config('embed.google_api_key');
-                $response = json_decode(file_get_contents($url))->items[0];
-
-                return [
-                    'title' => $response->snippet->title,
-                    'description' => $response->snippet->description,
-                    'created_at' => $response->snippet->publishedAt,
-                    'image' => [
-                        'small' => $response->snippet->thumbnails->default->url,
-                        'medium' => $response->snippet->thumbnails->medium->url,
-                        'large' => $response->snippet->thumbnails->high->url,
-                        'max' => $response->snippet->thumbnails->maxres->url,
-                    ],
-                    'full' => $response,
-                ];
-            },
+            'dataCallback' => 'Cohensive\Embed\DataFetcher@fetchYoutube',
         ],
 
         'liveleak' => [
-            'name'    => 'LiveLeak',
-            'type'    => 'video',
+            'name' => 'LiveLeak',
+            'type' => 'video',
             'website' => 'http://liveleak.com',
-            'ssl'     => false,
-            'url'     => '(https?://)?(?:www\.)?liveleak\.com/ll_embed\?f=([0-9a-z]+)',
-            'info'    => [
-                'id'    => '{1}',
-                'url'   => '{protocol}://liveleak.com/ll_embed?f={1}',
+            'ssl' => false,
+            'url' => '(https?://)?(?:www\.)?liveleak\.com/ll_embed\?f=([0-9a-z]+)',
+            'info' => [
+                'id' => '{1}',
+                'url' => '{protocol}://liveleak.com/ll_embed?f={1}',
             ],
-            'render'  => [
+            'render' => [
                 'sizeRatio' => 1.77,
-                'iframe'  => [
-                    'src'     => '{protocol}://liveleak.com/ll_embed?f={1}',
-                    'width'   => 640,
-                    'height'  => 360,
+                'iframe' => [
+                    'src' => '{protocol}://liveleak.com/ll_embed?f={1}',
+                    'width' => 640,
+                    'height' => 360,
                     'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
-                    'layout' => 'responsive'
+                    'layout' => 'responsive',
                 ],
             ],
-            'data'         => null,
+            'data' => null,
             'dataCallback' => null,
         ],
 
         'vimeo' => [
-            'name'    => 'Vimeo',
-            'type'    => 'video',
+            'name' => 'Vimeo',
+            'type' => 'video',
             'website' => 'http://vimeo.com',
-            'ssl'     => true,
-            'url'     => [
+            'ssl' => true,
+            'url' => [
                 '(https?://)?(?:www\.)?vimeo\.com/([0-9]+)',
-                '(https?://)?(?:www\.)?vimeo\.com/m/([0-9]+)'
+                '(https?://)?(?:www\.)?vimeo\.com/m/([0-9]+)',
             ],
-            'info'    => [
-                'id'     => '{1}',
-                'url'    => '{protocol}://vimeo.com/{1}',
+            'info' => [
+                'id' => '{1}',
+                'url' => '{protocol}://vimeo.com/{1}',
                 'dataUrl' => '{protocol}://vimeo.com/api/v2/video/{1}.json',
             ],
-            'render'  => [
+            'render' => [
                 'sizeRatio' => 1.77,
-                'iframe'  => [
-                    'src'     => '{protocol}://player.vimeo.com/video/{1}',
-                    'width'   => 500,
-                    'height'  => 281,
+                'iframe' => [
+                    'src' => '{protocol}://player.vimeo.com/video/{1}',
+                    'width' => 500,
+                    'height' => 281,
                     'allowfullscreen' => null,
-                    'frameborder'     => 0,
+                    'frameborder' => 0,
                     'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
-                    'layout' => 'responsive'
+                    'layout' => 'responsive',
                 ],
             ],
             'data' => null,
-            'dataCallback' => function($embed) {
-                $url = $embed->getProvider()->info->dataUrl;
-                $response = json_decode(file_get_contents($url))[0];
-
-                return [
-                    'title'  => $response->title,
-                    'description' => $response->description,
-                    'created_at'  => $response->upload_date,
-                    'image' => [
-                        'small'  => $response->thumbnail_small,
-                        'medium' => $response->thumbnail_medium,
-                        'large'  => $response->thumbnail_large,
-                        'max'  => $response->thumbnail_large,
-                    ],
-                    'full' => $response,
-                ];
-            },
+            'dataCallback' => 'Cohensive\Embed\DataFetcher@fetchVimeo',
         ],
 
         'dailymotion' => [
-            'name'    => 'Dailymotion',
-            'type'    => 'video',
+            'name' => 'Dailymotion',
+            'type' => 'video',
             'website' => 'http://dailymotion.com',
-            'ssl'     => true,
-            'url'     => '(https?://)?(?:www\.)?dailymotion\.com/video/([^_]+)',
-            'info'    => [
-                'id'    => '{1}',
-                'url'   => '{protocol}://dailymotion.com/video/{1}',
+            'ssl' => true,
+            'url' => '(https?://)?(?:www\.)?dailymotion\.com/video/([^_]+)',
+            'info' => [
+                'id' => '{1}',
+                'url' => '{protocol}://dailymotion.com/video/{1}',
             ],
-            'render'  => [
+            'render' => [
                 'sizeRatio' => 1.77,
-                'iframe'  => [
-                    'src'     => '{protocol}://www.dailymotion.com/embed/video/{1}',
-                    'width'   => 520,
-                    'height'  => 420,
+                'iframe' => [
+                    'src' => '{protocol}://www.dailymotion.com/embed/video/{1}',
+                    'width' => 520,
+                    'height' => 420,
                     'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
-                    'layout' => 'responsive'
+                    'layout' => 'responsive',
                 ],
             ],
-            'data'         => null,
+            'data' => null,
             'dataCallback' => null,
         ],
 
         'gametrailers' => [
-            'name'    => 'GameTrailers',
-            'type'    => 'video',
+            'name' => 'GameTrailers',
+            'type' => 'video',
             'website' => 'http://gametrailers.com',
-            'ssl'     => false,
-            'url'     => '^(https?://)?media\.mtvnservices\.com/embed/([^"]+:)([0-9a-z-_]+)',
-            'info'    => [
-                'id'    => '{1}{2}',
-                'url'   => '{protocol}://media.mtvnservices.com/embed/{1}{2}',
+            'ssl' => false,
+            'url' => '^(https?://)?media\.mtvnservices\.com/embed/([^"]+:)([0-9a-z-_]+)',
+            'info' => [
+                'id' => '{1}{2}',
+                'url' => '{protocol}://media.mtvnservices.com/embed/{1}{2}',
             ],
-            'render'  => [
+            'render' => [
                 'sizeRatio' => 1.77,
-                'iframe'  => [
-                    'src'     => '{protocol}://media.mtvnservices.com/embed/{1}{2}',
-                    'width'   => 560,
-                    'height'  => 315,
+                'iframe' => [
+                    'src' => '{protocol}://media.mtvnservices.com/embed/{1}{2}',
+                    'width' => 560,
+                    'height' => 315,
                     'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
-                    'layout' => 'responsive'
+                    'layout' => 'responsive',
                 ],
             ],
-            'data'         => null,
+            'data' => null,
             'dataCallback' => null,
         ],
 
         'ign' => [
-            'name'    => 'IGN',
-            'type'    => 'video',
+            'name' => 'IGN',
+            'type' => 'video',
             'website' => 'http://ign.com',
-            'ssl'     => false,
-            'url'     => '^(https?://)?(?:www\.)?ign\.com/videos/([0-9a-zA-Z-_/]+)',
-            'info'    => [
-                'id'    => '{1}',
-                'url'   => '{protocol}://ign.com/videos/{1}',
+            'ssl' => false,
+            'url' => '^(https?://)?(?:www\.)?ign\.com/videos/([0-9a-zA-Z-_/]+)',
+            'info' => [
+                'id' => '{1}',
+                'url' => '{protocol}://ign.com/videos/{1}',
             ],
-            'render'  => [
+            'render' => [
                 'sizeRatio' => 1.77,
-                'iframe'  => [
-                    'src'     => '{protocol}://widgets.ign.com/video/embed/content.html?url={1}',
-                    'width'   => 560,
-                    'height'  => 315,
+                'iframe' => [
+                    'src' => '{protocol}://widgets.ign.com/video/embed/content.html?url={1}',
+                    'width' => 560,
+                    'height' => 315,
                     'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
-                    'layout' => 'responsive'
+                    'layout' => 'responsive',
                 ],
             ],
-            'data'         => null,
+            'data' => null,
             'dataCallback' => null,
         ],
 
