@@ -11,7 +11,7 @@ For Laravel 5:
 ~~~
     "cohensive/embed": "dev-master"
     // or
-    "cohensive/embed": "5.3.*"
+    "cohensive/embed": "5.5.*"
 ~~~
 
 For Laravel 4:
