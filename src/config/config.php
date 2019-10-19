@@ -390,6 +390,36 @@ return [
             'dataCallback' => null,
         ],
 
+        'twitchClip' => [
+            'name' => 'Twitch',
+            'type' => 'video',
+            'website' => 'https://clips.twitch.tv',
+            'ssl' => true,
+            'url' => [
+                '^(https?://)?clips.twitch\.tv/([a-zA-Z]+)$',
+                '^(https?://)?(?:www\.)?twitch\.tv/(?:[0-9a-zA-Z-_]+)/clip/([0-9a-zA-Z-_]+)',
+            ],
+            'info' => [
+                'id' => '{1}',
+                'url' => '{protocol}://clips.twitch.tv/{1}',
+            ],
+            'render' => [
+                'sizeRatio' => 1.70,
+                'iframe' => [
+                    'src' => '{protocol}://clips.twitch.tv/embed?clip={1}&autoplay=false&tt_medium=clips_embed',
+                    'width' => 420,
+                    'height' => 237,
+                    'scrolling' => 'no',
+                    'allowfullscreen' => true,
+                    'frameborder' => 0,
+                    'sandbox' => 'allow-scripts allow-popups allow-same-origin allow-presentation',
+                    'layout' => 'responsive',
+                ],
+            ],
+            'data' => null,
+            'dataCallback' => null,
+        ],
+
         'twitchArchive' => [
             'name' => 'Twitch Archive',
             'type' => 'video',
@@ -494,36 +524,6 @@ return [
                         'flashvars' => 'hostname=www.twitch.tv&channel={1}&auto_play=false&start_volume=25',
                         'movie' => '{protocol}://www.twitch.tv/widgets/live_embed_player.swf',
                     ],
-                ],
-            ],
-            'data' => null,
-            'dataCallback' => null,
-        ],
-
-        'twitchClip' => [
-            'name' => 'Twitch',
-            'type' => 'video',
-            'website' => 'https://clips.twitch.tv',
-            'ssl' => true,
-            'url' => [
-                '^(https?://)?clips.twitch\.tv/([a-zA-Z]+)$',
-                '^(https?://)?(?:www\.)?twitch\.tv/(?:[0-9a-zA-Z-_]+)/clip/([0-9a-zA-Z-_]+)',
-            ],
-            'info' => [
-                'id' => '{1}',
-                'url' => '{protocol}://clips.twitch.tv/{1}',
-            ],
-            'render' => [
-                'sizeRatio' => 1.70,
-                'iframe' => [
-                    'src' => '{protocol}://clips.twitch.tv/embed?clip={1}&autoplay=false&tt_medium=clips_embed',
-                    'width' => 420,
-                    'height' => 237,
-                    'scrolling' => 'no',
-                    'allowfullscreen' => true,
-                    'frameborder' => 0,
-                    'sandbox' => 'allow-scripts allow-popups allow-same-origin allow-presentation',
-                    'layout' => 'responsive',
                 ],
             ],
             'data' => null,

@@ -158,6 +158,14 @@ class EmbedTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('<amp-video width="560" height="315" controls="controls" layout="responsive"><source src="https://example.com/hello.webm" type="video/webm"></source><source src="https://example.com/hello.ogg" type="video/ogg"></source><source src="https://example.com/hello.mp4" type="video/mp4"></source></amp-video>', $this->embed->getAmpHtml());
     }
 
+    public function testTwitchParseData()
+    {
+        $this->embed->setUrl('https://www.twitch.tv/clintstevens/clip/CrispyEndearingCiderBibleThump')->parseUrl();
+        $expected = '<iframe src="https://clips.twitch.tv/embed?clip=CrispyEndearingCiderBibleThump&autoplay=false&tt_medium=clips_embed" width="420" height="237" scrolling="no" allowfullscreen="1" frameborder="0" sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive"></iframe>';
+
+        $this->assertEquals($expected, $this->embed->getHtml());
+    }
+
     public function testVimeoParseData()
     {
         $this->embed->setUrl('https://vimeo.com/73116214')->parseUrl()->fetchData();
