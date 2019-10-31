@@ -20,5 +20,12 @@
       "Cohensive\\Embed": "src/"
     }
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+  "extra": {
+        "laravel": {
+            "providers": [
+                "Cohensive\\Embed\\EmbedServiceProvider"
+            ]
+        }
+    }
 }

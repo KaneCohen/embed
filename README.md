@@ -1,30 +1,37 @@
 # Embed
 
-Generate media html (YouTube, Vimeo, Kickstarter etc.) based on the url.
+Generate media HTML (YouTube, Vimeo, Kickstarter etc.) based on the URL.
 
 ## Installation
 
-Add following require to your `composer.json` file:
+`composer require cohensive/embed`
 
-For Laravel 5:
+Or add following require to your `composer.json` file:
 
-~~~
-    "cohensive/embed": "dev-master"
-    // or
-    "cohensive/embed": "5.5.*"
-~~~
+For Laravel 5/6:
+
+```json
+"cohensive/embed": "dev-master"
+```
+
+or
+```json
+"cohensive/embed": "5.5.*"
+```
 
 For Laravel 4:
 
-~~~
-    "cohensive/embed": "4.3.*"
-~~~
+```json
+"cohensive/embed": "4.3.*"
+```
 
 Then run `composer install` or `composer update` to download it and autoload.
 
-In `providers` array you need to add new package:
+If you're using Laravel 5.5+ you can ignore the next step because the Service Provider is autoloaded.
 
-~~~
+For Laravel < 5.5, in the `providers` array in `config/app.php` you need to add the following:
+
+```php
 'providers' => array(
 
 	//...
@@ -32,25 +39,25 @@ In `providers` array you need to add new package:
 	//...
 
 )
-~~~
+```
 
 In aliases:
 
-~~~
+```php
 'aliases' => array(
 
 	//...
-	'Embed' => 'Cohensive\Embed\Facades\Embed'
+	'Embed' => Cohensive\Embed\Facades\Embed::class
 	//...
 
 )
-~~~
+```
 
 ## Usage
 
-~~~
+```php
 $embed = Embed::make('http://youtu.be/uifYHNyH-jA')->parseUrl()
-// Will return Embed class if provider is found. Otherwie will return false - not found. No fancy errors for now.
+// Will return Embed class if provider is found. Otherwise will return false - not found. No fancy errors for now.
 if ($embed) {
 	// Set width of the embed.
 	$embed->setAttribute(['width' => 600]);
@@ -60,4 +67,4 @@ if ($embed) {
 	// Height could be set explicitly via setAttr() method.
 	echo $embed->getHtml();
 }
-~~~
+```
