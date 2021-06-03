@@ -49,7 +49,7 @@ In aliases:
 ## Usage
 
 ~~~
-$embed = Embed::make('http://youtu.be/uifYHNyH-jA')->parseUrl()
+$embed = Embed::make('http://youtu.be/uifYHNyH-jA')->parseUrl();
 // Will return Embed class if provider is found. Otherwie will return false - not found. No fancy errors for now.
 if ($embed) {
 	// Set width of the embed.
