@@ -1,3 +1,8 @@
+# New Version
+
+If you're running PHP 8+ I highly recommend using new version of the library: [OEmbed](https://github.com/KaneCohen/oembed).  
+It has more features while still working almost the same way as this one.
+
 # Embed
 
 Generate media html (YouTube, Vimeo, Kickstarter etc.) based on the url.
