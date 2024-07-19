@@ -44,6 +44,20 @@ return [
                     'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
                     'layout' => 'responsive',
                 ],
+                'wrappedIframe' => [
+                    'src' => '{protocol}://www.youtube.com/embed/{1}?list={2}&rel=0&wmode=transparent',
+                    'width' => '100%',
+                    'height' => '100%',
+                    'allowfullscreen' => null,
+                    'frameborder' => 0,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive',
+                    'style' => 'position: absolute;',
+                ],
+                'wrapper' => [
+                    'start' => '<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.5%;">',
+                    'end' => '</div>'
+                ],
             ],
             'data' => null,
             'dataCallback' => null,
@@ -73,6 +87,20 @@ return [
                     'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
                     'layout' => 'responsive',
                 ],
+                'wrappedIframe' => [
+                    'src' => '{protocol}://www.youtube.com/embed/videoseries?list={1}&rel=0&wmode=transparent',
+                    'width' => '100%',
+                    'height' => '100%',
+                    'allowfullscreen' => null,
+                    'frameborder' => 0,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive',
+                    'style' => 'position: absolute;',
+                ],
+                'wrapper' => [
+                    'start' => '<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.5%;">',
+                    'end' => '</div>'
+                ],
             ],
             'data' => null,
             'dataCallback' => null,
@@ -85,7 +113,7 @@ return [
             'ssl' => true,
             'url' => [
                 '^(https?://)?(?:www\.)?youtu\.be/([0-9a-zA-Z-_]{11})?(?:(?:\S+)?(?:\?|&)t=([0-9hm]+s))?(?:\S+)?',
-                '^(https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=|watch\?.+&v=))((?:\w|-){11})(?:(?:\S+)?(?:\?|&)t=([0-9hm]+s))?(?:\S+)?$',
+                '^(https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/(?:embed/|v/|shorts/|watch\?v=|watch\?.+&v=))((?:\w|-){11})(?:(?:\S+)?(?:\?|&)t=([0-9hm]+s))?(?:\S+)?$',
             ],
             'timestamp' => '^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com/)(?:\S+)?(?:(?:\S+)?(?:\?|&)t=(?:([0-9]+)h)?(?:([0-9]+)m)?(?:([0-9]+)s)?)$',
             'timestampParam' => '&start=',
@@ -127,6 +155,20 @@ return [
                         'allowFullScreen' => 'true',
                         'allowscriptaccess' => 'always',
                     ],
+                ],
+                'wrappedIframe' => [
+                    'src' => '{protocol}://www.youtube.com/embed/{1}?rel=0&wmode=transparent',
+                    'width' => '100%',
+                    'height' => '100%',
+                    'allowfullscreen' => null,
+                    'frameborder' => 0,
+                    'sandbox' => 'allow-scripts allow-same-origin allow-presentation',
+                    'layout' => 'responsive',
+                    'style' => 'position: absolute;',
+                ],
+                'wrapper' => [
+                    'start' => '<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.5%;">',
+                    'end' => '</div>'
                 ],
             ],
             'data' => null,
@@ -396,7 +438,7 @@ return [
             'website' => 'https://clips.twitch.tv',
             'ssl' => true,
             'url' => [
-                '^(https?://)?clips.twitch\.tv/([a-zA-Z]+)$',
+                '^(https?://)?clips\.twitch\.tv/([0-9a-zA-Z-_]+)$',
                 '^(https?://)?(?:www\.)?twitch\.tv/(?:[0-9a-zA-Z-_]+)/clip/([0-9a-zA-Z-_]+)',
             ],
             'info' => [

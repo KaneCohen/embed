@@ -372,6 +372,38 @@ class Embed
     }
 
     /**
+     * Generate wrapped iframe for embed if required and available.
+     *
+     * @return string
+     */
+    public function forgeWrappedIframe()
+    {
+        // Check if we have an iframe creation array.
+        if (!$this->ampMode
+            && $this->provider
+            && isset($this->provider['render']['wrappedIframe'])
+            && isset($this->provider['render']['wrapper'])
+        ) {
+            $tag = 'iframe';
+            // Start iframe tag.
+            $iframe = "<$tag";
+
+            foreach ($this->provider['render']['wrappedIframe'] as $attribute => $val) {
+                $iframe .= sprintf(' %s="%s"', $attribute, $val);
+            }
+
+            // Close iframe tag.
+            $iframe .= "></$tag>";
+
+            $iframe .= $this->forgeScript();
+
+            $wrapper = $this->provider['render']['wrapper'];
+
+            return $wrapper['start'] . $iframe . $wrapper['end'];
+        }
+    }
+
+    /**
      * Generate object for embed if required and available.
      *
      * @return string
